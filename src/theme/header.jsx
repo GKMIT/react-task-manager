@@ -13,7 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 import Drawer from './drawer';
-import { drawerWidth } from '../helper/constant'
+import { drawerWidth, appTitle } from '../helper/constant'
 
 const styles = (theme) => ({
     appBar: {
@@ -72,7 +72,7 @@ class Header extends React.Component {
                         </IconButton>
 
                         <Typography variant="h6" className={classes.title}>
-                            News
+                            {appTitle}
                         </Typography>
 
 
