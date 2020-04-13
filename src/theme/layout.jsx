@@ -1,5 +1,4 @@
 import React from 'react'
-import Container from '@material-ui/core/Container';
 import Header from './header'
 import Footer from './footer'
 import MuiTheme from './theme'
@@ -67,10 +66,8 @@ class Layout extends React.Component {
                             })}
                         >
                             <div className={classes.drawerHeader} />
-                            <Container>
-                                {this.props.children}
-                                <Footer />
-                            </Container>
+                            {this.props.children}
+                            <Footer />
                         </main>
                     </div>
                 </MuiTheme>
