@@ -4,7 +4,7 @@ import Footer from './footer'
 import MuiTheme from './theme'
 import { withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { drawerWidth } from '../helper/constant'
+import { drawerWidth } from './constant'
 
 const styles = (theme) => ({
     root: {

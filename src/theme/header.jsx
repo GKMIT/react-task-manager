@@ -13,7 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 import Drawer from './drawer';
-import { drawerWidth, appTitle } from '../helper/constant'
+import { drawerWidth, appTitle } from './constant'
 
 const styles = (theme) => ({
     appBar: {
