@@ -1,9 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import Dashboard from './controller/dashboard';
-import Layout from './theme/layout';
-import Login from './controller/login';
+import Login from './pages/login';
+import AdminRoutes from './adminRoutes';
 
 class Routes extends React.Component {
     render() {
@@ -11,15 +9,7 @@ class Routes extends React.Component {
             <Router>
                 <Switch>
                     <Route path='/' exact component={Login} />
-
-                    <Route path='/admin/:path?' exact>
-                        <Layout>
-                            <Switch>
-                                <Route path='/admin' exact component={Dashboard} />
-                                <Route path='/admin/dashboard' exact component={Dashboard} />
-                            </Switch>
-                        </Layout>
-                    </Route>
+                    <AdminRoutes />
                 </Switch>
             </Router>
         )

@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-
-import Dashboard from './controller/dashboard';
 import Layout from './theme/layout';
+import Dashboard from './pages/dashboard';
+
 
 class AdminRoutes extends React.Component {
     render() {
