@@ -45,7 +45,7 @@ class Login extends React.Component {
             form: [
                 {
                     name: 'email',
-                    label: 'email',
+                    label: 'Email',
                     type: 'email',
                     icon: 'mail',
                     value: '',
@@ -53,19 +53,12 @@ class Login extends React.Component {
                 },
                 {
                     name: 'password',
-                    label: 'password',
+                    label: 'Password',
                     type: 'password',
                     icon: 'password',
                     value: '',
                     validation: 'required',
-                },
-                {
-                    name: 'remember_me',
-                    label: 'Remember me',
-                    type: 'checkbox',
-                    value: '',
-                    validation: 'required',
-                },
+                }
             ]
         }
     }
