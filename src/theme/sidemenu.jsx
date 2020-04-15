@@ -5,6 +5,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 
+import { withRouter } from "react-router-dom";
+
 import { connect } from 'react-redux';
 import { userActions } from '../_actions';
 
@@ -35,6 +37,7 @@ class SideMenu extends React.Component {
 
     handleLogout = () => {
         this.props.logout();
+        this.props.history.push('/');
         const { openMenu } = this.state
         this.setState({
             openMenu: !openMenu
@@ -77,4 +80,4 @@ const actionCreators = {
     logout: userActions.logout,
 };
 
-export default (connect(mapState, actionCreators)(SideMenu));
+export default withRouter(connect(mapState, actionCreators)(SideMenu));

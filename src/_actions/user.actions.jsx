@@ -3,8 +3,6 @@ import { userService } from '../_services';
 import { alertActions } from './alert.actions';
 import { history } from '../_helpers';
 
-console.log(history)
-
 export const userActions = {
     login,
     logout,

@@ -1,9 +1,8 @@
 import React from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Layout from './theme/layout';
 import Dashboard from './pages/dashboard';
 import { connect } from 'react-redux';
-
 class AdminRoutes extends React.Component {
     constructor(props) {
         super(props)
@@ -15,14 +14,11 @@ class AdminRoutes extends React.Component {
 
     render() {
         return (
-            <Route path='/admin/:path?' exact>
-                <Layout>
-                    <Switch>
-                        <Route path='/admin' component={Dashboard} />
-                        <Route path='/admin/dashboard' component={Dashboard} />
-                    </Switch>
-                </Layout>
-            </Route>
+            <Layout>
+                <Switch>
+                    <Route path='/admin' exact component={Dashboard} />
+                </Switch>
+            </Layout>
         )
     }
 }
@@ -32,4 +28,4 @@ function mapState(state) {
     return { loggedIn };
 }
 
-export default withRouter(connect(mapState, null)(AdminRoutes));
+export default connect(mapState, null)(AdminRoutes);

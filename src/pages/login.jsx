@@ -74,8 +74,7 @@ class Login extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const { form } = this.state
-        console.log(form)
+        const { form } = this.state        
         this.props.login(form[0].value, form[1].value)
     }
 
