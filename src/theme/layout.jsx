@@ -42,6 +42,25 @@ class Layout extends React.Component {
         this.state = {
             openMenu: false
         }
+
+
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.resize.bind(this));
+        this.resize();
+    }
+
+    resize() {
+        if (window.innerWidth > 400) {
+            this.setState({
+                openMenu: true
+            })
+        } else {
+            this.setState({
+                openMenu: false
+            })
+        }
     }
 
     handleOpenMenu = () => {
@@ -54,6 +73,8 @@ class Layout extends React.Component {
     render() {
         const { classes } = this.props
         const { openMenu } = this.state
+
+
         return (
             <React.Fragment>
                 <MuiTheme>
