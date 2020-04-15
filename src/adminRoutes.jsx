@@ -1,17 +1,25 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import Layout from './theme/layout';
 import Dashboard from './pages/dashboard';
-
+import { connect } from 'react-redux';
 
 class AdminRoutes extends React.Component {
+    constructor(props) {
+        super(props)
+
+        if (!this.props.loggedIn) {
+            this.props.history.push('/')
+        }
+    }
+
     render() {
         return (
             <Route path='/admin/:path?' exact>
                 <Layout>
                     <Switch>
-                        <Route path='/admin' exact component={Dashboard} />
-                        <Route path='/admin/dashboard' exact component={Dashboard} />
+                        <Route path='/admin' component={Dashboard} />
+                        <Route path='/admin/dashboard' component={Dashboard} />
                     </Switch>
                 </Layout>
             </Route>
@@ -19,4 +27,9 @@ class AdminRoutes extends React.Component {
     }
 }
 
-export default AdminRoutes;
+function mapState(state) {
+    const { loggedIn } = state.authentication;
+    return { loggedIn };
+}
+
+export default withRouter(connect(mapState, null)(AdminRoutes));

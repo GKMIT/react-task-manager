@@ -12,6 +12,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Copyright from '../component/copyright'
 import MuiForm from '../component/form'
 
+import { connect } from 'react-redux';
+import { userActions } from '../_actions';
+
 const styles = (theme) => ({
     root: {
         height: '100vh',
@@ -71,7 +74,9 @@ class Login extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.history.push('/admin')
+        const { form } = this.state
+        console.log(form)
+        this.props.login(form[0].value, form[1].value)
     }
 
     render() {
@@ -121,4 +126,13 @@ class Login extends React.Component {
     }
 }
 
-export default withStyles(styles)(Login);
+function mapState(state) {
+    const { loggedIn } = state.authentication;
+    return { loggedIn };
+}
+
+const actionCreators = {
+    login: userActions.login,
+};
+
+export default withStyles(styles)(connect(mapState, actionCreators)(Login));

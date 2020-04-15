@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import Routes from './routes';
 import { Provider } from 'react-redux';
 import { store } from './_helpers';
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

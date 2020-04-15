@@ -9,11 +9,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
 
-import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from '@material-ui/icons/MoreVert';
 
 import Drawer from './drawer';
 import { drawerWidth, appTitle } from './constant'
+
+import SideMenu from './sidemenu'
 
 const styles = (theme) => ({
     appBar: {
@@ -76,13 +76,7 @@ class Header extends React.Component {
                         </Typography>
 
 
-                        <IconButton aria-label="search" color="inherit">
-                            <SearchIcon />
-                        </IconButton>
-
-                        <IconButton aria-label="display more actions" edge="end" color="inherit">
-                            <MoreIcon />
-                        </IconButton>
+                        <SideMenu />
                     </Toolbar>
                 </AppBar>
                 <Drawer openMenu={openMenu} handleOpenMenu={handleOpenMenu} />

@@ -12,10 +12,9 @@ function login(email, password) {
 
     return apiConfig.post(`/auth/login`, user)
         .then(handleResponse)
-        .then(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user.data));            
-            return user;
+        .then(data => {
+            localStorage.setItem('user', JSON.stringify(data.data));
+            return data;
         });
 }
 
