@@ -16,6 +16,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import { withStyles } from '@material-ui/core/styles';
 import { drawerWidth } from './constant'
 
+import MainMenu from './mainmenu';
+
+
 const styles = (theme) => ({
     drawer: {
         width: drawerWidth,
@@ -59,23 +62,7 @@ class MuiDrawer extends React.Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
+                    <MainMenu />
                 </Drawer>
             </React.Fragment>
         )
