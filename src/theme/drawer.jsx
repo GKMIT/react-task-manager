@@ -14,7 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { withStyles } from '@material-ui/core/styles';
-import { drawerWidth } from '../helper/constant'
+import { drawerWidth } from './constant'
 
 const styles = (theme) => ({
     drawer: {

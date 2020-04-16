@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { appTitle } from '../helper/constant';
+import { appTitle } from '../theme/constant';
 
 
 class Copyright extends React.Component {
