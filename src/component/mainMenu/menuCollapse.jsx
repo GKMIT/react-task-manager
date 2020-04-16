@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
@@ -55,7 +56,9 @@ class MenuCollapse extends React.Component {
         return (
             <React.Fragment>
                 <ListItem button onClick={() => { handleClick(item.id) }} className={nested ? classes.nested : ''}>
-                    {item.icon && <Icon>{item.icon}</Icon>}  <ListItemText primary={item.name} />
+                    {item.icon && <ListItemIcon><Icon>{item.icon}</Icon></ListItemIcon>}
+
+                    <ListItemText primary={item.name} />
                     {menu[item.id] ? (<ExpandLess />) : (<ExpandMore />)}
                 </ListItem>
                 <Collapse
@@ -65,7 +68,7 @@ class MenuCollapse extends React.Component {
                     timeout="auto"
                     unmountOnExit
                 >
-                    <List component="nav"  key={`MenuList${item.id}`}>
+                    <List component="nav" key={`MenuList${item.id}`}>
                         {item.subitems.map(
                             sitem => {
                                 return (

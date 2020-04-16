@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { NavLink } from 'react-router-dom';
@@ -36,7 +37,8 @@ class MenuNode extends React.Component {
         return (
             <React.Fragment>
                 <ListItem button component={NavLink} to={link} className={nestedClass} exact>
-                    {icon && <Icon>{icon}</Icon>} <ListItemText primary={name} />
+                    {icon && <ListItemIcon><Icon>{icon}</Icon></ListItemIcon>}
+                    <ListItemText primary={name} />
                 </ListItem>
             </React.Fragment>
         );
