@@ -28,7 +28,7 @@ class List extends React.Component {
     }
 
     deleteCrud = (data) => {
-        this.props.showConfirm('confirm', `are you sure want to delete ${data.name} ?`, data)
+        this.props.showConfirm('confirm', `are you sure want to delete ${data.email} ?`, data)
     }
 
     deleteAll = (data) => {
