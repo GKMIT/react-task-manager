@@ -54,11 +54,6 @@ const items = [
     }
 ]
 
-
-
-
-
-
 class MainMenu extends React.Component {
     constructor(props) {
         super(props)
