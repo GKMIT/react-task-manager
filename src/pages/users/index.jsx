@@ -23,6 +23,30 @@ class List extends React.Component {
         this.getData();
     }
 
+    deleteData = (id) => {
+        this.props.deleteCrud('users', 'users', id);
+    }
+
+    deleteCrud = (data) => {
+        this.props.showConfirm('confirm', `are you sure want to delete ${data.name} ?`, data)
+    }
+
+    deleteAll = (data) => {
+        this.props.showConfirm('confirm', `are you sure want to delete ${data.length} row ?`, data)
+    }
+
+    editCrud = (data) => {
+        this.props.history.push(`/user-form/${data.id}`)
+    }
+
+    changePassword = (data) => {
+        this.props.history.push(`/change-password/${data.id}`)
+    }
+
+    addData = () => {
+        this.props.history.push(`/user-form/new`)
+    }
+
     render() {
         const columns = []
         columns.push({
@@ -40,7 +64,8 @@ class List extends React.Component {
                     title={title}
                     data={listData}
                     columns={columns}
-                    addCrud={this.addCrud}
+                    selection={true}
+                    addData={this.addData}
                     deleteAll={this.deleteAll}
                     onRefresh={this.refresh}
                 />

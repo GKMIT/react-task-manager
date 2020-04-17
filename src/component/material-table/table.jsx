@@ -1,12 +1,11 @@
 import React from "react";
 import MaterialTable from 'material-table';
 
-
 const tableRef = React.createRef();
-
 
 export default function MaterialDataTable(props) {
     const [columns] = React.useState(props.columns);
+
     const actions = []
     const options = {
         selection: props.selection,
@@ -16,42 +15,35 @@ export default function MaterialDataTable(props) {
         filtering: true,
     }
 
-
     if (props.deleteAll) {
-        actions.push(
-            {
-                icon: 'delete',
-                tooltip: 'Delete',
-                onClick: (event, rowData) => {
-                    props.deleteAll(rowData);
-                }
+        actions.push({
+            icon: 'delete',
+            tooltip: 'Delete',
+            onClick: (event, rowData) => {
+                props.deleteAll(rowData);
             }
-        )
+        })
     }
-    if (props.addCrud) {
-        actions.push(
-            {
-                icon: 'add',
-                tooltip: 'Add',
-                isFreeAction: true,
-                onClick: () => {
-                    props.addCrud();
-                }
+    if (props.addData) {
+        actions.push({
+            icon: 'add',
+            tooltip: 'Add',
+            isFreeAction: true,
+            onClick: () => {
+                props.addData();
             }
-        )
+        })
     }
 
     if (props.onRefresh) {
-        actions.push(
-            {
-                icon: 'refresh',
-                tooltip: 'Refresh Data',
-                isFreeAction: true,
-                onClick: () => {
-                    props.onRefresh();
-                },
+        actions.push({
+            icon: 'refresh',
+            tooltip: 'Refresh Data',
+            isFreeAction: true,
+            onClick: () => {
+                props.onRefresh();
             },
-        )
+        })
     }
 
 

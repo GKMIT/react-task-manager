@@ -4,7 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import LockIcon from '@material-ui/icons/Lock';
 
-export const TableAction = (deleteRole, editRole, editPass = false) => {
+export const TableAction = (deleteData, editData, editPass = false) => {
     return (
         {
             field: 'action',
@@ -13,9 +13,9 @@ export const TableAction = (deleteRole, editRole, editPass = false) => {
             filtering: false,
             render: rowData => (
                 <React.Fragment>
-                    {deleteRole && <IconButton aria-label="delete" onClick={(event) => { deleteRole(rowData) }}><DeleteIcon fontSize="small" /></IconButton>}
-                    {editRole && <IconButton aria-label="edit" onClick={(event) => { editRole(rowData) }}><EditIcon fontSize="small" /></IconButton>}
-                    {editPass && <IconButton aria-label="edit" onClick={(event) => { editPass(rowData) }}><LockIcon fontSize="small" /></IconButton>}
+                    {deleteData && <IconButton aria-label="delete" onClick={() => { deleteData(rowData) }}><DeleteIcon fontSize="small" /></IconButton>}
+                    {editData && <IconButton aria-label="edit" onClick={() => { editData(rowData) }}><EditIcon fontSize="small" /></IconButton>}
+                    {editPass && <IconButton aria-label="edit" onClick={() => { editPass(rowData) }}><LockIcon fontSize="small" /></IconButton>}
                 </React.Fragment >
             )
         }
