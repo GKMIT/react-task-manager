@@ -42,8 +42,6 @@ class Layout extends React.Component {
         this.state = {
             openMenu: false
         }
-
-
     }
 
     componentDidMount() {
@@ -74,7 +72,6 @@ class Layout extends React.Component {
         const { classes } = this.props
         const { openMenu } = this.state
 
-
         return (
             <React.Fragment>
                 <MuiTheme>
@@ -94,7 +91,6 @@ class Layout extends React.Component {
                 </MuiTheme>
             </React.Fragment>
         )
-
     }
 }
 
