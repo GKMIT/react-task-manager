@@ -7,10 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 class MuiCheckBox extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
+    
     handleChange = (e, index) => {
         e.persist()
         this.props.handleChange(e.target.checked, index)

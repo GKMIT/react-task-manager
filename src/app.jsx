@@ -10,12 +10,9 @@ import AlertConfirmDialog from './component/alert/alertConfirmDialog';
 import AlertMessage from './component/alert/alertMessage';
 class App extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
     componentDidMount() {
         this.props.clearAlerts();
-        this.props.hideLoader();        
+        this.props.hideLoader();
     }
 
     render() {
@@ -58,7 +55,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
-    clearAlerts: alertActions.clear,    
+    clearAlerts: alertActions.clear,
     clearConfirms: confirmActions.clear,
     setConfirm: confirmActions.confirm,
     showLoader: loaderActions.show,

@@ -23,6 +23,7 @@ function _getAll(type, filterData) {
                 name: filter.column.field,
                 value: filter.value
             })
+            return null
         })
     }
 

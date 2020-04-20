@@ -8,10 +8,7 @@ import Icon from '@material-ui/core/Icon';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 class MuiTextBox extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
+    
     handleChange = (e, index) => {
         e.persist()
         this.props.handleChange(e.target.value, index)

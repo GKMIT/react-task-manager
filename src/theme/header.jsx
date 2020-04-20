@@ -43,9 +43,6 @@ const styles = (theme) => ({
 
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         const { classes, openMenu, handleOpenMenu } = this.props
