@@ -96,7 +96,7 @@ function _update(kind, url, id, data) {
                 result => {
                     dispatch(alertActions.success(result.data.message));
                     dispatch(success(null))
-                    dispatch(loaderActions.hide());                    
+                    dispatch(loaderActions.hide());
                 },
                 error => {
                     dispatch(failure(error.message));

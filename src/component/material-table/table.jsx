@@ -1,9 +1,12 @@
 import React from "react";
 import MaterialTable from 'material-table';
+import { crudService } from '../../_services';
+import { alertActions } from '../../_actions';
+import { connect } from 'react-redux';
 
 const tableRef = React.createRef();
 
-export default function MaterialDataTable(props) {
+function MaterialDataTable(props) {
     const [columns] = React.useState(props.columns);
 
     const actions = []
@@ -35,27 +38,45 @@ export default function MaterialDataTable(props) {
         })
     }
 
-    if (props.onRefresh) {
+    if (props.refresh) {
         actions.push({
             icon: 'refresh',
             tooltip: 'Refresh Data',
             isFreeAction: true,
-            onClick: () => {
-                props.onRefresh();
-            },
+            onClick: () => tableRef.current && tableRef.current.onQueryChange()
         })
     }
-
-
-    const data = props.data ? props.data : []
 
     return (
         <MaterialTable
             tableRef={tableRef}
             title={props.title}
-            data={data}
+            data={query =>
+                new Promise((resolve, reject) => {
+                    console.log('query', query)
+                    crudService._getAll(props.url, query)
+                        .then(
+                            result => {
+                                resolve({
+                                    data: result.data.data,
+                                    page: result.data.page - 1,
+                                    totalCount: result.data.total,
+                                })
+                            },
+                            error => {
+                                props.showError(error.message)
+                            }
+                        );
+                })
+            }
             options={options}
             actions={actions}
             columns={columns}
         />);
 }
+
+const actionCreators = {
+    showError: alertActions.error,
+}
+
+export default connect(null, actionCreators)(MaterialDataTable);

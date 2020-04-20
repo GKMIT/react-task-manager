@@ -7,21 +7,6 @@ import MaterialDataTable from '../../component/material-table/table'
 
 const title = 'User List'
 class List extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
-    componentDidMount() {
-        this.getData();
-    }
-
-    getData = () => {
-        this.props.getAll('users', 'users');
-    }
-
-    refresh = () => {
-        this.getData();
-    }
 
     deleteData = (id) => {
         this.props.deleteCrud('users', 'users', id);
@@ -56,18 +41,16 @@ class List extends React.Component {
         if (this.deleteCrud && this.editCrud) {
             columns.push(TableAction(this.deleteCrud, this.editCrud))
         }
-        const { listData } = this.props
-
         return (
             <React.Fragment>
                 <MaterialDataTable
                     title={title}
-                    data={listData}
+                    url='users'
                     columns={columns}
                     selection={true}
                     addData={this.addData}
                     deleteAll={this.deleteAll}
-                    onRefresh={this.refresh}
+                    refresh={true}
                 />
             </React.Fragment>
         );
