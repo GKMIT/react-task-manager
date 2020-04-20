@@ -33,9 +33,6 @@ const styles = (theme) => ({
 
 
 class MuiDrawer extends React.Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         const { classes, openMenu, handleOpenMenu, theme } = this.props

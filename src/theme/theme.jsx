@@ -12,10 +12,7 @@ const theme = createMuiTheme({
 });
 
 class MuiTheme extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
+    
     render() {
         return (
             <MuiThemeProvider theme={theme}>

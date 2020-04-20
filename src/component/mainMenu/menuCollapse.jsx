@@ -20,10 +20,6 @@ const useStyles = (theme => ({
 
 class MenuCollapse extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { handleClick, menu, item, classes, nested, location } = this.props;
 

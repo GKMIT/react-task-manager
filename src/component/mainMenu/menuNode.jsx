@@ -15,12 +15,7 @@ const useStyles = (theme => ({
     }
 }));
 
-
 class MenuNode extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const { classes, nested, subNested } = this.props;

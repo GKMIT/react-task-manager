@@ -3,20 +3,15 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from './pages/login';
 import AdminRoutes from './adminRoutes';
 import { connect } from 'react-redux';
-import { loaderActions } from './_actions';
+import { loaderActions, confirmActions, alertActions } from './_actions';
 
 import Loader from './component/alert/loader';
+import AlertConfirmDialog from './component/alert/alertConfirmDialog';
+import AlertMessage from './component/alert/alertMessage';
 class App extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
-
-    componentWillMount() {
-        this.props.showLoader();
-    }
-
     componentDidMount() {
+        this.props.clearAlerts();
         this.props.hideLoader();
     }
 
@@ -25,6 +20,22 @@ class App extends React.Component {
             <React.Fragment>
 
                 <Loader open={this.props.loader} />
+                {this.props.confirm.show &&
+                    <AlertConfirmDialog
+                        title={this.props.confirm.title}
+                        text={this.props.confirm.text}
+                        open={true}
+                        handleConfirm={() => this.props.setConfirm(this.props.confirm.data)}
+                        handleClose={() => this.props.clearConfirms()}
+                    />
+                }
+
+                {this.props.alert && <AlertMessage
+                    open={true}
+                    type={this.props.alert.type}
+                    message={this.props.alert.message}
+                    handleClose={this.props.clearAlerts}
+                />}
 
                 <Router>
                     <Switch>
@@ -39,11 +50,14 @@ class App extends React.Component {
 
 
 function mapState(state) {
-    const { loader } = state;
-    return { loader };
+    const { alert, loader, confirm } = state;
+    return { alert, loader, confirm };
 }
 
 const actionCreators = {
+    clearAlerts: alertActions.clear,
+    clearConfirms: confirmActions.clear,
+    setConfirm: confirmActions.confirm,
     showLoader: loaderActions.show,
     hideLoader: loaderActions.hide,
 };

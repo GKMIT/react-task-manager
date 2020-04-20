@@ -5,9 +5,6 @@ import { appTitle } from '../theme/constant';
 
 
 class Copyright extends React.Component {
-    constructor(props) {
-        super(props)
-    }
 
     showCurrentYear = () => {
         return new Date().getFullYear();
