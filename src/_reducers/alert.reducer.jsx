@@ -1,6 +1,6 @@
 import { alertConstants } from '../_constants';
 
-export function alert(state = {}, action) {
+export function alert(state = null, action) {
     switch (action.type) {
         case alertConstants.INFO:
             return {
@@ -19,11 +19,11 @@ export function alert(state = {}, action) {
             };
         case alertConstants.ERROR:
             return {
-                type: 'danger',
+                type: 'error',
                 message: action.message
             };
         case alertConstants.CLEAR:
-            return {};
+            return null;
         default:
             return state
     }

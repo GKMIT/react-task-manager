@@ -7,18 +7,15 @@ import { loaderActions, confirmActions, alertActions } from './_actions';
 
 import Loader from './component/alert/loader';
 import AlertConfirmDialog from './component/alert/alertConfirmDialog';
+import AlertMessage from './component/alert/alertMessage';
 class App extends React.Component {
 
     constructor(props) {
         super(props)
     }
-
-    componentWillMount() {
-        this.props.showLoader();
-    }
-
     componentDidMount() {
-        this.props.hideLoader();
+        this.props.clearAlerts();
+        this.props.hideLoader();        
     }
 
     render() {
@@ -35,6 +32,13 @@ class App extends React.Component {
                         handleClose={() => this.props.clearConfirms()}
                     />
                 }
+
+                {this.props.alert && <AlertMessage
+                    open={true}
+                    type={this.props.alert.type}
+                    message={this.props.alert.message}
+                    handleClose={this.props.clearAlerts}
+                />}
 
                 <Router>
                     <Switch>
@@ -54,7 +58,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
-    clearAlerts: alertActions.clear,
+    clearAlerts: alertActions.clear,    
     clearConfirms: confirmActions.clear,
     setConfirm: confirmActions.confirm,
     showLoader: loaderActions.show,
