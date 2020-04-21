@@ -12,7 +12,7 @@ class Form extends React.Component {
         super(props)
         this.state = {
             title: 'Create User',
-            submitText: 'Save',
+            submitText: 'Create',
             action: 'create',
             id: null,
             form: [
@@ -49,7 +49,12 @@ class Form extends React.Component {
         crudService._get('users', id)
             .then(
                 result => {
-                    this.setState({ id: id, action: 'update' })
+                    this.setState({
+                        id: id,
+                        action: 'update',
+                        title: 'Edit User',
+                        submitText: 'Edit'
+                    })
                     this.bindForm(result.data)
                 }, error => {
                     this.props.showError(error.message)
