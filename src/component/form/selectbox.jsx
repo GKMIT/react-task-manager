@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import Icon from '@material-ui/core/Icon';
+import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import MenuItem from '@material-ui/core/MenuItem';
 
-class MuiTextBox extends React.Component {
+class MuiSelectBox extends React.Component {
 
     handleChange = (e, index) => {
         e.persist()
@@ -15,7 +14,7 @@ class MuiTextBox extends React.Component {
     }
 
     render() {
-        const { name, type, label, value, required, inputAdornmentPosition, icon, fullWidth, helperText, multiline, rowsMax, index } = this.props
+        const { name, label, value, required, fullWidth, options, helperText, index } = this.props
         return (
             <React.Fragment>
                 <FormControl
@@ -24,20 +23,20 @@ class MuiTextBox extends React.Component {
                 >
 
                     <InputLabel>{label}</InputLabel>
-                    <Input
+
+                    <Select
                         name={name}
-                        type={type}
                         required={required}
                         value={value}
-                        multiline={multiline}
-                        rowsMax={rowsMax}
                         onChange={e => this.handleChange(e, index)}
-                        endAdornment={
-                            <InputAdornment position={inputAdornmentPosition}>
-                                <Icon>{icon}</Icon>
-                            </InputAdornment>
-                        }
-                    />
+                        inputProps={{
+                            name: name,
+                        }}
+                    >
+                        {options && options.map(option => {
+                            return (<MenuItem value={option.id}>{option.email}</MenuItem>)
+                        })}
+                    </Select>
 
                     {helperText && <FormHelperText>{helperText}</FormHelperText>}
                 </FormControl>
@@ -47,17 +46,17 @@ class MuiTextBox extends React.Component {
     }
 }
 
-MuiTextBox.propTypes = {
+MuiSelectBox.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.any.isRequired
 };
 
-MuiTextBox.defaultProps = {
+MuiSelectBox.defaultProps = {
     name: "",
     label: "",
     value: "",
     inputAdornmentPosition: 'end'
 }
 
-export default MuiTextBox;
+export default MuiSelectBox;

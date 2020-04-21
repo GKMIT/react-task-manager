@@ -24,10 +24,6 @@ class List extends React.Component {
         this.props.history.push(`/user-form/${data.id}`)
     }
 
-    changePassword = (data) => {
-        this.props.history.push(`/change-password/${data.id}`)
-    }
-
     addData = () => {
         this.props.history.push(`/user-form/new`)
     }

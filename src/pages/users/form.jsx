@@ -3,7 +3,6 @@ import MuiForm from '../../component/form'
 import FormLayout from '../../theme/formLayout'
 
 import { connect } from 'react-redux';
-import { crudService } from '../../_services';
 import { crudActions, alertActions } from '../../_actions';
 
 class Form extends React.Component {
@@ -11,71 +10,61 @@ class Form extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: 'Create User',
+            title: 'Create user',
             submitText: 'Create',
             action: 'create',
             id: null,
-            form: [
-                {
-                    name: 'email',
-                    label: 'Email',
-                    type: 'email',
-                    icon: 'mail',
-                    value: '',
-                    validation: 'required|email',
-                },
-                {
-                    name: 'password',
-                    label: 'Password',
-                    type: 'password',
-                    icon: 'password',
-                    value: '',
-                    validation: 'required',
-                }
-            ],
-            formData: []
+            form: {
+                email: '',
+                password: ''
+            },
         }
     }
 
+    createForm = () => {
+        const { form } = this.state
+        let formFields = []
+
+        formFields.push({
+            name: 'email',
+            label: 'Email',
+            type: 'email',
+            icon: 'mail',
+            value: form.email,
+            validation: 'required:email',
+        })
+
+        formFields.push({
+            name: 'password',
+            label: 'Password',
+            type: 'password',
+            value: form.password,
+            validation: 'required',
+        })
+
+        return formFields
+    }
 
     componentDidMount() {
         const { id } = this.props.match.params
         if (id && id !== 'new') {
-            this.getData(id)
+            this.props.getData('user', 'users', id)
         }
     }
 
-    getData = (id) => {
-        crudService._get('users', id)
-            .then(
-                result => {
-                    this.setState({
-                        id: id,
-                        action: 'update',
-                        title: 'Edit User',
-                        submitText: 'Edit'
-                    })
-                    this.bindForm(result.data)
-                }, error => {
-                    this.props.showError(error.message)
-                }
-            );
-    }
-
-    bindForm = (formData) => {
-        const { form } = this.state
-        if (!formData.length) {
-            form.forEach((element, index) => {
-                if (formData[element.name] !== undefined)
-                    form[index]['value'] = formData[element.name]
-            });
-            this.setState({ form: form })
+    static getDerivedStateFromProps(props) {
+        let newState = {};
+        if (props.match.params.id !== 'new' && props.form !== null) {
+            newState.title = 'Edit User'
+            newState.btnText = 'Edit'
+            newState.form = props.form
         }
+        return newState
     }
 
-    handleChange = (value, index) => {
+    handleChange = (value, name) => {
         const { form } = this.state
-        form[index].value = value
+        form[name] = value
         this.setState(form)
     }
 
@@ -83,10 +72,10 @@ class Form extends React.Component {
         event.preventDefault();
         const { action, id, form } = this.state
         if (form) {
-            let formData = {}
-            form.forEach(formValue => {
-                formData[formValue.name] = formValue.value
-            })
+            const formData = {
+                email: form.email,
+                password: form.password,
+            }
             if (action === 'update') {
                 this.props.updateData('user', 'users', id, formData)
             } else {
@@ -102,7 +91,7 @@ class Form extends React.Component {
         return (
             <FormLayout title={title} fullWidth={false}>
                 <MuiForm
-                    formFields={this.state.form}
+                    formFields={this.createForm()}
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     submitText={submitText}
@@ -118,7 +107,7 @@ class Form extends React.Component {
 function mapState(state) {
     const { user } = state;
     return {
-        form: user
+        form: user,
     };
 }
 

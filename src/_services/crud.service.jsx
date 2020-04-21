@@ -14,27 +14,30 @@ function _get(type, id) {
         });
 }
 function _getAll(type, filterData) {
-
     let filters = []
-
-    if (filterData.filters) {
-        filterData.filters.map(filter => {
-            filters.push({
-                name: filter.column.field,
-                value: filter.value
+    let filter
+    if (filterData) {
+        if (filterData.filters) {
+            filterData.filters.map(filter => {
+                filters.push({
+                    name: filter.column.field,
+                    value: filter.value
+                })
+                return null
             })
-            return null
-        })
+        }
+
+        filter = {
+            page: filterData.page + 1,
+            pageSize: filterData.pageSize,
+            search: filterData.search,
+            orderBy: filterData.orderBy ? filterData.orderBy.field : null,
+            orderDirection: filterData.orderDirection,
+            filters: JSON.stringify(filters),
+        }
     }
 
-    const filter = {
-        page: filterData.page + 1,
-        pageSize: filterData.pageSize,
-        search: filterData.search,
-        orderBy: filterData.orderBy ? filterData.orderBy.field : null,
-        orderDirection: filterData.orderDirection,
-        filters: JSON.stringify(filters),
-    }
+
 
     return apiConfig.get(`/${type}`, { params: filter })
         .then(result => {
