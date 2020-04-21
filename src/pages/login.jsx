@@ -45,6 +45,8 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            title: 'Sign in',
+            submitText: 'Sign in',
             form: [
                 {
                     name: 'email',
@@ -74,13 +76,13 @@ class Login extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const { form } = this.state        
+        const { form } = this.state
         this.props.login(form[0].value, form[1].value)
     }
 
     render() {
         const { classes } = this.props
-
+        const { title, submitText } = this.state
         return (
             <Grid container component="main" className={classes.root}>
                 <CssBaseline />
@@ -91,14 +93,14 @@ class Login extends React.Component {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            {title}
                         </Typography>
 
                         <MuiForm
                             formFields={this.state.form}
                             handleChange={this.handleChange}
                             handleSubmit={this.handleSubmit}
-                            submitText="Sign In"
+                            submitText={submitText}
                             submitFullWidth={true}
                             noValidate={false}
                         />
