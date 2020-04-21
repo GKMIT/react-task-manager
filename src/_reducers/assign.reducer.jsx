@@ -3,4 +3,8 @@ export const reducerData = [
     'user',
     'tasks',
     'task',
+    'roles',
+    'role',
+    'permissions',
+    'permission',
 ]

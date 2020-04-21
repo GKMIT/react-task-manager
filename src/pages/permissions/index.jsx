@@ -5,11 +5,11 @@ import { crudActions, confirmActions } from '../../_actions';
 import { TableAction } from '../../component/material-table/tableAction'
 import MaterialDataTable from '../../component/material-table/table'
 
-const title = 'User List'
+const title = 'permission List'
 class List extends React.Component {
 
     deleteData = (id) => {
-        this.props.deleteCrud('users', 'users', id);
+        this.props.deleteCrud('permissions', 'permissions', id);
     }
 
     deleteCrud = (data) => {
@@ -21,26 +21,22 @@ class List extends React.Component {
     }
 
     editCrud = (data) => {
-        this.props.history.push(`/user-form/${data.id}`)
+        this.props.history.push(`/permission-form/${data.id}`)
     }
 
     addData = () => {
-        this.props.history.push(`/user-form/new`)
+        this.props.history.push(`/permission-form/new`)
     }
 
     render() {
         const columns = []
         columns.push({
-            title: "Name",
-            field: "name"
+            title: "Code",
+            field: "code"
         })
         columns.push({
-            title: "Mobile",
-            field: "mobile"
-        })
-        columns.push({
-            title: "Email",
-            field: "email"
+            title: "Details",
+            field: "details"
         })
         if (this.deleteCrud && this.editCrud) {
             columns.push(TableAction(this.deleteCrud, this.editCrud))
@@ -49,7 +45,7 @@ class List extends React.Component {
             <React.Fragment>
                 <MaterialDataTable
                     title={title}
-                    url='users'
+                    url='permissions'
                     columns={columns}
                     selection={true}
                     addData={this.addData}
@@ -63,8 +59,8 @@ class List extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { users, confirm } = state;
-    return { listData: users, confirm };
+    const { permissions, confirm } = state;
+    return { listData: permissions, confirm };
 }
 
 const actionCreators = {

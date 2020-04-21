@@ -1,7 +1,6 @@
 import React from 'react';
 import MuiForm from '../../component/form'
 import FormLayout from '../../theme/formLayout'
-
 import { connect } from 'react-redux';
 import { crudActions, alertActions } from '../../_actions';
 
@@ -10,59 +9,39 @@ class Form extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: 'Create user',
+            title: 'Create Role',
             submitText: 'Create',
             action: 'create',
             id: null,
             form: {
-                role_id: '',
                 name: '',
-                mobile: '',
-                email: '',
-                password: ''
+                permissions: []
             },
         }
     }
 
     createForm = () => {
         const { form } = this.state
-        const { roles } = this.props
+        const { permissions } = this.props
         let formFields = []
-
-        formFields.push({
-            name: 'role_id',
-            label: 'Role',
-            type: 'select',
-            icon: '',
-            value: form.role_id,
-            options: roles,
-            validation: 'required',
-        })
 
         formFields.push({
             name: 'name',
             label: 'Name',
             type: 'text',
-            icon: 'person',
+            icon: '',
             value: form.name,
-            validation: 'required',
-        })
-        formFields.push({
-            name: 'mobile',
-            label: 'mobile',
-            type: 'text',
-            icon: 'call',
-            value: form.mobile,
             validation: 'required',
         })
 
         formFields.push({
-            name: 'email',
-            label: 'Email',
-            type: 'email',
-            icon: 'mail',
-            value: form.email,
-            validation: 'required|email',
+            name: 'permissions',
+            label: 'Permissions',
+            type: 'multiselect',
+            icon: '',
+            value: form.permissions,
+            options: permissions,
+            validation: 'required',
         })
 
         return formFields
@@ -71,16 +50,16 @@ class Form extends React.Component {
     componentDidMount() {
         const { id } = this.props.match.params
         if (id && id !== 'new') {
-            this.props.getData('user', 'users', id)
+            this.props.getData('role', 'roles', id)
         }
-        this.props.getAll('roles', 'roles')
+        this.props.getAll('permissions', 'permissions')
     }
 
     static getDerivedStateFromProps(props) {
         let newState = {};
         if (props.match.params.id !== 'new' && props.form !== null) {
             newState.id = props.match.params.id
-            newState.title = 'Edit User'
+            newState.title = 'Edit Role'
             newState.submitText = 'Edit'
             newState.action = 'update'
             newState.form = props.form
@@ -99,17 +78,15 @@ class Form extends React.Component {
         const { action, id, form } = this.state
         if (form) {
             const formData = {
-                role_id: form.role_id,
                 name: form.name,
-                mobile: form.mobile,
-                email: form.email,
+                permissions: JSON.stringify(form.permissions),
             }
             if (action === 'update') {
-                this.props.updateData('user', 'users', id, formData)
+                this.props.updateData('role', 'roles', id, formData)
             } else {
-                this.props.createData('user', 'users', formData)
+                this.props.createData('role', 'roles', formData)
             }
-            this.props.history.push('/users')
+            this.props.history.push('/roles')
         }
 
     }
@@ -133,10 +110,19 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { user, roles } = state;
+    const { role, permissions } = state;
+    let permissionData = []
+    if (permissions) {
+        permissions.forEach(element => {
+            permissionData.push({
+                id: element.id,
+                name: element.code
+            })
+        });
+    }
     return {
-        form: user,
-        roles
+        form: role,
+        permissions: permissionData
     };
 }
 

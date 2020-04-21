@@ -24,6 +24,18 @@ const items = [
                 "name": "User Module",
                 "subitems": [
                     {
+                        "id": "permissions",
+                        "icon": "person",
+                        "name": "Permission List",
+                        "link": "/permissions"
+                    },
+                    {
+                        "id": "roles",
+                        "icon": "person",
+                        "name": "Role List",
+                        "link": "/roles"
+                    },
+                    {
                         "id": "users",
                         "icon": "person",
                         "name": "User List",

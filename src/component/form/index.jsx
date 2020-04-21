@@ -4,6 +4,7 @@ import MuiTextBox from './textbox'
 import MuiCheckBox from './checkbox'
 import MuiPassTextBox from './password'
 import MuiSelectBox from './selectbox'
+import MuiMultiSelectBox from './multiselectbox'
 import { withStyles } from '@material-ui/core/styles';
 import SimpleReactValidator from 'simple-react-validator';
 
@@ -52,6 +53,21 @@ class MuiForm extends React.Component {
                             case 'select':
                                 return (
                                     <MuiSelectBox
+                                        label={form.label}
+                                        name={form.name}
+                                        required={form.required}
+                                        fullWidth={fullWidth}
+                                        helperText={this.validator.message(form.name, form.value, form.validation)}
+                                        index={index}
+                                        key={index}
+                                        value={form.value}
+                                        options={form.options}
+                                        handleChange={this.handleChange}
+                                    />
+                                )
+                            case 'multiselect':
+                                return (
+                                    <MuiMultiSelectBox
                                         label={form.label}
                                         name={form.name}
                                         required={form.required}
