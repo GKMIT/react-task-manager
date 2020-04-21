@@ -56,6 +56,7 @@ class Form extends React.Component {
                     handleSubmit={this.handleSubmit}
                     submitText={submitText}
                     submitFullWidth={true}
+                    fullWidth={true}
                     noValidate={false}
                 />
             </FormLayout >

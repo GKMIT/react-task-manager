@@ -8,7 +8,7 @@ import Icon from '@material-ui/core/Icon';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 class MuiTextBox extends React.Component {
-    
+
     handleChange = (e, index) => {
         e.persist()
         this.props.handleChange(e.target.value, index)
@@ -20,7 +20,9 @@ class MuiTextBox extends React.Component {
             <React.Fragment>
                 <FormControl
                     error={helperText ? true : false}
-                    fullWidth={fullWidth}>
+                    fullWidth={fullWidth}
+                >
+
                     <InputLabel>{label}</InputLabel>
                     <Input
                         name={name}

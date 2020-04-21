@@ -12,8 +12,6 @@ const styles = (theme) => ({
         alignItems: 'center',
     },
 });
-
-
 class FormLayout extends React.Component {
     render() {
         const { classes, title, fullWidth } = this.props

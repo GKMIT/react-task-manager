@@ -40,7 +40,7 @@ class MuiForm extends React.Component {
     }
 
     render() {
-        const { formFields, classes, submitText, submitFullWidth } = this.props
+        const { formFields, classes, submitText, submitFullWidth, fullWidth } = this.props
         return (
             <React.Fragment>
                 <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
@@ -54,7 +54,7 @@ class MuiForm extends React.Component {
                                         label={form.label}
                                         name={form.name}
                                         required={form.required}
-                                        fullWidth
+                                        fullWidth={fullWidth}
                                         helperText={this.validator.message(form.name, form.value, form.validation)}
                                         index={index}
                                         key={index}
@@ -68,7 +68,7 @@ class MuiForm extends React.Component {
                                         label={form.label}
                                         name={form.name}
                                         required={form.required}
-                                        fullWidth
+                                        fullWidth={fullWidth}
                                         helperText={this.validator.message(form.name, form.value, form.validation)}
                                         index={index}
                                         key={index}
@@ -86,7 +86,7 @@ class MuiForm extends React.Component {
                                         icon={form.icon}
                                         multiline={form.multiline}
                                         rowsMax={form.rowsMax}
-                                        fullWidth
+                                        fullWidth={fullWidth}
                                         helperText={this.validator.message(form.name, form.value, form.validation)}
                                         index={index}
                                         key={index}
