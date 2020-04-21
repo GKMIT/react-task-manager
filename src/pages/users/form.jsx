@@ -3,15 +3,18 @@ import MuiForm from '../../component/form'
 import FormLayout from '../../theme/formLayout'
 
 import { connect } from 'react-redux';
-import { userActions } from '../../_actions';
+import { crudService } from '../../_services';
+import { crudActions, alertActions } from '../../_actions';
 
 class Form extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            title: 'User form',
+            title: 'Create User',
             submitText: 'Save',
+            action: 'create',
+            id: null,
             form: [
                 {
                     name: 'email',
@@ -29,7 +32,39 @@ class Form extends React.Component {
                     value: '',
                     validation: 'required',
                 }
-            ]
+            ],
+            formData: []
+        }
+    }
+
+
+    componentDidMount() {
+        const { id } = this.props.match.params
+        if (id && id !== 'new') {
+            this.getData(id)
+        }
+    }
+
+    getData = (id) => {
+        crudService._get('users', id)
+            .then(
+                result => {
+                    this.setState({ id: id, action: 'update' })
+                    this.bindForm(result.data)
+                }, error => {
+                    this.props.showError(error.message)
+                }
+            );
+    }
+
+    bindForm = (formData) => {
+        const { form } = this.state
+        if (!formData.length) {
+            form.forEach((element, index) => {
+                if (formData[element.name] !== undefined)
+                    form[index]['value'] = formData[element.name]
+            });
+            this.setState({ form: form })
         }
     }
 
@@ -41,13 +76,24 @@ class Form extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const { form } = this.state
-        this.props.login(form[0].value, form[1].value)
+        const { action, id, form } = this.state
+        if (form) {
+            let formData = {}
+            form.forEach(formValue => {
+                formData[formValue.name] = formValue.value
+            })
+            if (action === 'update') {
+                this.props.updateData('user', 'users', id, formData)
+            } else {
+                this.props.createData('user', 'users', formData)
+            }
+            this.props.history.push('/users')
+        }
+
     }
 
-    render() {    
+    render() {
         const { title, submitText } = this.state
-
         return (
             <FormLayout title={title} fullWidth={false}>
                 <MuiForm
@@ -65,12 +111,17 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { loggedIn } = state.authentication;
-    return { loggedIn };
+    const { user } = state;
+    return {
+        form: user
+    };
 }
 
 const actionCreators = {
-    login: userActions.login,
+    getData: crudActions._get,
+    showError: alertActions.error,
+    createData: crudActions._create,
+    updateData: crudActions._update,
 };
 
 export default connect(mapState, actionCreators)(Form);
