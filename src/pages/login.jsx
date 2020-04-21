@@ -47,37 +47,47 @@ class Login extends React.Component {
         this.state = {
             title: 'Sign in',
             submitText: 'Sign in',
-            form: [
-                {
-                    name: 'email',
-                    label: 'Email',
-                    type: 'email',
-                    icon: 'mail',
-                    value: '',
-                    validation: 'required|email',
-                },
-                {
-                    name: 'password',
-                    label: 'Password',
-                    type: 'password',
-                    icon: 'password',
-                    value: '',
-                    validation: 'required',
-                }
-            ]
+            form: {
+                email: '',
+                password: '',
+            }
         }
     }
 
-    handleChange = (value, index) => {
+    createForm = () => {
         const { form } = this.state
-        form[index].value = value
+        let formFields = []
+
+        formFields.push({
+            name: 'email',
+            label: 'Email',
+            type: 'email',
+            icon: 'mail',
+            value: form.email,
+            validation: 'required|email',
+        })
+
+        formFields.push({
+            name: 'password',
+            label: 'Password',
+            type: 'password',
+            value: form.password,
+            validation: 'required',
+        })
+
+        return formFields
+    }
+
+    handleChange = (value, name) => {
+        const { form } = this.state
+        form[name] = value
         this.setState(form)
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
         const { form } = this.state
-        this.props.login(form[0].value, form[1].value)
+        this.props.login(form.email, form.password)
     }
 
     render() {
@@ -97,11 +107,12 @@ class Login extends React.Component {
                         </Typography>
 
                         <MuiForm
-                            formFields={this.state.form}
+                            formFields={this.createForm()}
                             handleChange={this.handleChange}
                             handleSubmit={this.handleSubmit}
                             submitText={submitText}
                             submitFullWidth={true}
+                            fullWidth={true}
                             noValidate={false}
                         />
 

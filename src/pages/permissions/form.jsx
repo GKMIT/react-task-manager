@@ -10,59 +10,36 @@ class Form extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: 'Create user',
+            title: 'Create permission',
             submitText: 'Create',
             action: 'create',
             id: null,
             form: {
-                role_id: '',
-                name: '',
-                mobile: '',
-                email: '',
-                password: ''
+                code: '',
+                details: ''
             },
         }
     }
 
     createForm = () => {
         const { form } = this.state
-        const { roles } = this.props
         let formFields = []
 
         formFields.push({
-            name: 'role_id',
-            label: 'Role',
-            type: 'select',
+            name: 'code',
+            label: 'Code',
+            type: 'text',
             icon: '',
-            value: form.role_id,
-            options: roles,
+            value: form.code,
             validation: 'required',
         })
 
         formFields.push({
-            name: 'name',
-            label: 'Name',
+            name: 'details',
+            label: 'Details',
             type: 'text',
-            icon: 'person',
-            value: form.name,
+            value: form.details,
             validation: 'required',
-        })
-        formFields.push({
-            name: 'mobile',
-            label: 'mobile',
-            type: 'text',
-            icon: 'call',
-            value: form.mobile,
-            validation: 'required',
-        })
-
-        formFields.push({
-            name: 'email',
-            label: 'Email',
-            type: 'email',
-            icon: 'mail',
-            value: form.email,
-            validation: 'required|email',
         })
 
         return formFields
@@ -71,16 +48,15 @@ class Form extends React.Component {
     componentDidMount() {
         const { id } = this.props.match.params
         if (id && id !== 'new') {
-            this.props.getData('user', 'users', id)
+            this.props.getData('permission', 'permissions', id)
         }
-        this.props.getAll('roles', 'roles')
     }
 
     static getDerivedStateFromProps(props) {
         let newState = {};
         if (props.match.params.id !== 'new' && props.form !== null) {
             newState.id = props.match.params.id
-            newState.title = 'Edit User'
+            newState.title = 'Edit Permission'
             newState.submitText = 'Edit'
             newState.action = 'update'
             newState.form = props.form
@@ -99,17 +75,15 @@ class Form extends React.Component {
         const { action, id, form } = this.state
         if (form) {
             const formData = {
-                role_id: form.role_id,
-                name: form.name,
-                mobile: form.mobile,
-                email: form.email,
+                code: form.code,
+                details: form.details,
             }
             if (action === 'update') {
-                this.props.updateData('user', 'users', id, formData)
+                this.props.updateData('permission', 'permissions', id, formData)
             } else {
-                this.props.createData('user', 'users', formData)
+                this.props.createData('permission', 'permissions', formData)
             }
-            this.props.history.push('/users')
+            this.props.history.push('/permissions')
         }
 
     }
@@ -133,16 +107,14 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { user, roles } = state;
+    const { permission } = state;
     return {
-        form: user,
-        roles
+        form: permission,
     };
 }
 
 const actionCreators = {
     getData: crudActions._get,
-    getAll: crudActions._getAll,
     showError: alertActions.error,
     createData: crudActions._create,
     updateData: crudActions._update,

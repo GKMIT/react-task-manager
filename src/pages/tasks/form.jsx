@@ -68,8 +68,10 @@ class Form extends React.Component {
     static getDerivedStateFromProps(props) {
         let newState = {};
         if (props.match.params.id !== 'new' && props.form !== null) {
+            newState.id = props.match.params.id
             newState.title = 'Edit Task'
-            newState.btnText = 'Edit'
+            newState.submitText = 'Edit'
+            newState.action = 'update'
             newState.form = props.form            
         }
         return newState

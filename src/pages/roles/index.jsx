@@ -5,11 +5,11 @@ import { crudActions, confirmActions } from '../../_actions';
 import { TableAction } from '../../component/material-table/tableAction'
 import MaterialDataTable from '../../component/material-table/table'
 
-const title = 'User List'
+const title = 'Role List'
 class List extends React.Component {
 
     deleteData = (id) => {
-        this.props.deleteCrud('users', 'users', id);
+        this.props.deleteCrud('roles', 'roles', id);
     }
 
     deleteCrud = (data) => {
@@ -21,11 +21,11 @@ class List extends React.Component {
     }
 
     editCrud = (data) => {
-        this.props.history.push(`/user-form/${data.id}`)
+        this.props.history.push(`/role-form/${data.id}`)
     }
 
     addData = () => {
-        this.props.history.push(`/user-form/new`)
+        this.props.history.push(`/role-form/new`)
     }
 
     render() {
@@ -34,14 +34,6 @@ class List extends React.Component {
             title: "Name",
             field: "name"
         })
-        columns.push({
-            title: "Mobile",
-            field: "mobile"
-        })
-        columns.push({
-            title: "Email",
-            field: "email"
-        })
         if (this.deleteCrud && this.editCrud) {
             columns.push(TableAction(this.deleteCrud, this.editCrud))
         }
@@ -49,7 +41,7 @@ class List extends React.Component {
             <React.Fragment>
                 <MaterialDataTable
                     title={title}
-                    url='users'
+                    url='roles'
                     columns={columns}
                     selection={true}
                     addData={this.addData}
@@ -63,8 +55,8 @@ class List extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { users, confirm } = state;
-    return { listData: users, confirm };
+    const { roles, confirm } = state;
+    return { listData: roles, confirm };
 }
 
 const actionCreators = {
