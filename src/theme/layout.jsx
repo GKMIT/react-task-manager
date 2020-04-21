@@ -50,7 +50,7 @@ class Layout extends React.Component {
     }
 
     resize() {
-        if (window.innerWidth > 400) {
+        if (window.innerWidth > 414) {
             this.setState({
                 openMenu: true
             })

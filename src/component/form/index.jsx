@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import MuiTextBox from './textbox'
 import MuiCheckBox from './checkbox'
 import MuiPassTextBox from './password'
+import MuiSelectBox from './selectbox'
 import { withStyles } from '@material-ui/core/styles';
 import SimpleReactValidator from 'simple-react-validator';
 
@@ -40,7 +41,7 @@ class MuiForm extends React.Component {
     }
 
     render() {
-        const { formFields, classes, submitText, submitFullWidth } = this.props
+        const { formFields, classes, submitText, submitFullWidth, fullWidth } = this.props
         return (
             <React.Fragment>
                 <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
@@ -48,13 +49,28 @@ class MuiForm extends React.Component {
                     {formFields.map((form, index) => {
 
                         switch (form.type) {
+                            case 'select':
+                                return (
+                                    <MuiSelectBox
+                                        label={form.label}
+                                        name={form.name}
+                                        required={form.required}
+                                        fullWidth={fullWidth}
+                                        helperText={this.validator.message(form.name, form.value, form.validation)}
+                                        index={index}
+                                        key={index}
+                                        value={form.value}
+                                        options={form.options}
+                                        handleChange={this.handleChange}
+                                    />
+                                )
                             case 'password':
                                 return (
                                     <MuiPassTextBox
                                         label={form.label}
                                         name={form.name}
                                         required={form.required}
-                                        fullWidth
+                                        fullWidth={fullWidth}
                                         helperText={this.validator.message(form.name, form.value, form.validation)}
                                         index={index}
                                         key={index}
@@ -68,7 +84,7 @@ class MuiForm extends React.Component {
                                         label={form.label}
                                         name={form.name}
                                         required={form.required}
-                                        fullWidth
+                                        fullWidth={fullWidth}
                                         helperText={this.validator.message(form.name, form.value, form.validation)}
                                         index={index}
                                         key={index}
@@ -86,7 +102,7 @@ class MuiForm extends React.Component {
                                         icon={form.icon}
                                         multiline={form.multiline}
                                         rowsMax={form.rowsMax}
-                                        fullWidth
+                                        fullWidth={fullWidth}
                                         helperText={this.validator.message(form.name, form.value, form.validation)}
                                         index={index}
                                         key={index}

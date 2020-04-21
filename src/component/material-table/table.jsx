@@ -53,7 +53,6 @@ function MaterialDataTable(props) {
             title={props.title}
             data={query =>
                 new Promise((resolve, reject) => {
-                    console.log('query', query)
                     crudService._getAll(props.url, query)
                         .then(
                             result => {

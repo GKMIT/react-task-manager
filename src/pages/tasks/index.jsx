@@ -8,20 +8,39 @@ import MaterialDataTable from '../../component/material-table/table'
 const title = 'Task List'
 class List extends React.Component {
 
+    deleteData = (id) => {
+        this.props.deleteCrud('tasks', 'tasks', id);
+    }
+
+    deleteCrud = (data) => {
+        this.props.showConfirm('confirm', `are you sure want to delete ${data.name} ?`, data)
+    }
+
+    deleteAll = (data) => {
+        this.props.showConfirm('confirm', `are you sure want to delete ${data.length} row ?`, data)
+    }
+
+    editCrud = (data) => {
+        this.props.history.push(`/task-form/${data.id}`)
+    }
+
+    addData = () => {
+        this.props.history.push(`/task-form/new`)
+    }
+
     render() {
         const columns = []
         columns.push({
-            title: "name",
+            title: "Name",
             field: "name"
         })
         columns.push({
-            title: "details",
+            title: "Details",
             field: "details"
         })
         if (this.deleteCrud && this.editCrud) {
             columns.push(TableAction(this.deleteCrud, this.editCrud))
         }
-
         return (
             <React.Fragment>
                 <MaterialDataTable
@@ -40,8 +59,8 @@ class List extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { confirm } = state;
-    return { confirm };
+    const { tasks, confirm } = state;
+    return { listData: tasks, confirm };
 }
 
 const actionCreators = {

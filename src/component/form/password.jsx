@@ -24,7 +24,7 @@ class MuiPassTextBox extends React.Component {
 
     handleChange = (e, index) => {
         e.persist()
-        this.props.handleChange(e.target.value, index)
+        this.props.handleChange(e.target.value, e.target.name, index)
     }
 
     render() {
