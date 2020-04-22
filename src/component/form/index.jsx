@@ -9,6 +9,7 @@ import MuiPassTextBox from './password'
 import MuiSelectBox from './selectbox'
 import MuiMultiSelectBox from './multiselectbox'
 import MuiDatePicker from './date'
+import MuiTimePicker from './time'
 
 
 const styles = (theme) => ({
@@ -111,9 +112,26 @@ class MuiForm extends React.Component {
                                         handleChange={this.handleChange}
                                     />
                                 )
+
                             case 'date':
                                 return (
                                     <MuiDatePicker
+                                        label={form.label}
+                                        name={form.name}
+                                        required={form.required}
+                                        fullWidth={fullWidth}
+                                        helperText={this.validator.message(form.name, form.value, form.validation)}
+                                        index={index}
+                                        key={index}
+                                        value={form.value}
+                                        variant={form.variant}
+                                        format={form.format}
+                                        handleChange={this.handleChange}
+                                    />
+                                )
+                            case 'time':
+                                return (
+                                    <MuiTimePicker
                                         label={form.label}
                                         name={form.name}
                                         required={form.required}
