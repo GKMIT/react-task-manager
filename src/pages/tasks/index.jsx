@@ -35,6 +35,14 @@ class List extends React.Component {
             field: "name"
         })
         columns.push({
+            title: "Start Date",
+            field: "start_date"
+        })
+        columns.push({
+            title: "End Date",
+            field: "end_date"
+        })
+        columns.push({
             title: "Details",
             field: "details"
         })

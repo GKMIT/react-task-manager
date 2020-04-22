@@ -34,7 +34,7 @@ class MuiSelectBox extends React.Component {
                         }}
                     >
                         {options && options.map(option => {
-                            return (<MenuItem value={option.id}>{option.name}</MenuItem>)
+                            return (<MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>)
                         })}
                     </Select>
 

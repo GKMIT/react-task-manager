@@ -42,6 +42,10 @@ class List extends React.Component {
             title: "Email",
             field: "email"
         })
+        columns.push({
+            title: "DOB",
+            field: "dob"
+        })
         if (this.deleteCrud && this.editCrud) {
             columns.push(TableAction(this.deleteCrud, this.editCrud))
         }
