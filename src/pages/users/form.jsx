@@ -19,7 +19,7 @@ class Form extends React.Component {
                 name: '',
                 mobile: '',
                 email: '',
-                password: ''
+                dob: ''
             },
         }
     }
@@ -64,6 +64,15 @@ class Form extends React.Component {
             value: form.email,
             validation: 'required|email',
         })
+        formFields.push({
+            name: 'dob',
+            label: 'Dob',
+            type: 'date',
+            variant: 'inline',
+            format: 'DD-MM-YYYY',
+            value: form.dob,
+            validation: 'required',
+        })
 
         return formFields
     }
@@ -103,6 +112,7 @@ class Form extends React.Component {
                 name: form.name,
                 mobile: form.mobile,
                 email: form.email,
+                dob: form.dob,
             }
             if (action === 'update') {
                 this.props.updateData('user', 'users', id, formData)
