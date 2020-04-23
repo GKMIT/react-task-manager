@@ -4,6 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import App from './app';
 import { Provider } from 'react-redux';
 import { store } from './_helpers';
+import './index.scss'
 
 ReactDOM.render(
   <React.Fragment>

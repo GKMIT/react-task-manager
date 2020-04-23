@@ -9,6 +9,7 @@ import UserList from './pages/users';
 import UserForm from './pages/users/form';
 import TaskList from './pages/tasks';
 import TaskForm from './pages/tasks/form';
+import TaskCalender from './pages/tasks/calender';
 import PermissionList from './pages/permissions';
 import PermissionForm from './pages/permissions/form';
 import RoleList from './pages/roles';
@@ -31,6 +32,7 @@ class AdminRoutes extends React.Component {
                     <Route path='/users' component={UserList} />
                     <Route path='/user-form/:id' component={UserForm} />
                     <Route path='/tasks' component={TaskList} />
+                    <Route path='/task-calender' component={TaskCalender} />
                     <Route path='/task-form/:id' component={TaskForm} />
                     <Route path='/roles' component={RoleList} />
                     <Route path='/role-form/:id' component={RoleForm} />

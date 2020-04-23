@@ -58,21 +58,20 @@ class MenuCollapse extends React.Component {
                     {menu[item.id] ? (<ExpandLess />) : (<ExpandMore />)}
                 </ListItem>
                 <Collapse
-                    key={item.id}
                     component="li"
                     in={menu[item.id]}
                     timeout="auto"
                     unmountOnExit
                 >
-                    <List component="nav" key={`MenuList${item.id}`}>
+                    <List component="nav">
                         {item.subitems.map(
                             sitem => {
                                 return (
                                     sitem.subitems != null ? (
-                                        <MenuCollapse key={`MenuCollapse${item.id}`} menu={menu} classes={classes} item={sitem} handleClick={() => { handleClick(sitem.id) }} nested={true} />
+                                        <MenuCollapse key={`SubMenuCollapse${sitem.id}`} menu={menu} classes={classes} item={sitem} handleClick={() => { handleClick(sitem.id) }} nested={true} />
                                     ) :
                                         (
-                                            <MenuNode key={`MenuNode${item.id}`} data={sitem} nested={true} subNested={nested} />
+                                            <MenuNode key={`SubMenuNode${sitem.id}`} data={sitem} nested={true} subNested={nested} />
                                         )
                                 )
                             }
