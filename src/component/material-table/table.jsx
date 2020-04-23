@@ -4,74 +4,91 @@ import { crudService } from '../../_services';
 import { alertActions } from '../../_actions';
 import { connect } from 'react-redux';
 
-const tableRef = React.createRef();
 
-function MaterialDataTable(props) {
-    const [columns] = React.useState(props.columns);
+class MaterialDataTable extends React.PureComponent {
 
-    const actions = []
-    const options = {
-        selection: props.selection,
-        actionsColumnIndex: -1,
-        search: true,
-        sorting: true,
-        filtering: true,
+    constructor(props) {
+        super(props)
+        this.state = {
+            columns: props.columns
+        }
+
+        this.tableRef = React.createRef();
     }
 
-    if (props.deleteAll) {
-        actions.push({
-            icon: 'delete',
-            tooltip: 'Delete',
-            onClick: (event, rowData) => {
-                props.deleteAll(rowData);
-            }
-        })
-    }
-    if (props.addData) {
-        actions.push({
-            icon: 'add',
-            tooltip: 'Add',
-            isFreeAction: true,
-            onClick: () => {
-                props.addData();
-            }
-        })
+    componentDidUpdate() {
+        if(this.tableRef.current){
+            this.tableRef.current.onQueryChange()
+        }
     }
 
-    if (props.refresh) {
-        actions.push({
-            icon: 'refresh',
-            tooltip: 'Refresh Data',
-            isFreeAction: true,
-            onClick: () => tableRef.current && tableRef.current.onQueryChange()
-        })
-    }
+    render() {
+        const { columns } = this.state
+        const actions = []
+        const options = {
+            selection: this.props.selection,
+            actionsColumnIndex: -1,
+            search: true,
+            sorting: true,
+            filtering: true,
+        }
 
-    return (
-        <MaterialTable
-            tableRef={tableRef}
-            title={props.title}
-            data={query =>
-                new Promise((resolve, reject) => {
-                    crudService._getAll(props.url, query)
-                        .then(
-                            result => {
-                                resolve({
-                                    data: result.data.data,
-                                    page: result.data.page - 1,
-                                    totalCount: result.data.total,
-                                })
-                            },
-                            error => {
-                                props.showError(error.message)
-                            }
-                        );
-                })
-            }
-            options={options}
-            actions={actions}
-            columns={columns}
-        />);
+        if (this.props.deleteAll) {
+            actions.push({
+                icon: 'delete',
+                tooltip: 'Delete',
+                onClick: (event, rowData) => {
+                    this.props.deleteAll(rowData);
+                }
+            })
+        }
+        if (this.props.addData) {
+            actions.push({
+                icon: 'add',
+                tooltip: 'Add',
+                isFreeAction: true,
+                onClick: () => {
+                    this.props.addData();
+                }
+            })
+        }
+
+        if (this.props.refresh) {
+            actions.push({
+                icon: 'refresh',
+                tooltip: 'Refresh Data',
+                isFreeAction: true,
+                onClick: () => this.tableRef.current && this.tableRef.current.onQueryChange()
+            })
+        }
+
+
+        return (
+            <MaterialTable
+                tableRef={this.tableRef}
+                title={this.props.title}
+                data={query =>
+                    new Promise((resolve, reject) => {
+                        crudService._getAll(this.props.url, query)
+                            .then(
+                                result => {
+                                    resolve({
+                                        data: result.data.data,
+                                        page: result.data.page - 1,
+                                        totalCount: result.data.total,
+                                    })
+                                },
+                                error => {
+                                    this.props.showError(error.message)
+                                }
+                            );
+                    })
+                }
+                options={options}
+                actions={actions}
+                columns={columns}
+            />);
+    }
 }
 
 const actionCreators = {
