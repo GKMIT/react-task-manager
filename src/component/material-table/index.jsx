@@ -4,7 +4,6 @@ import { crudService } from '../../_services';
 import { alertActions } from '../../_actions';
 import { connect } from 'react-redux';
 
-
 class MaterialDataTable extends React.PureComponent {
 
     constructor(props) {
@@ -17,16 +16,17 @@ class MaterialDataTable extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        if(this.tableRef.current){
+        if (this.tableRef.current) {
             this.tableRef.current.onQueryChange()
         }
     }
 
     render() {
         const { columns } = this.state
+        const { selection, refresh } = this.props
         const actions = []
         const options = {
-            selection: this.props.selection,
+            selection: selection,
             actionsColumnIndex: -1,
             search: true,
             sorting: true,
@@ -53,7 +53,7 @@ class MaterialDataTable extends React.PureComponent {
             })
         }
 
-        if (this.props.refresh) {
+        if (refresh) {
             actions.push({
                 icon: 'refresh',
                 tooltip: 'Refresh Data',
@@ -75,7 +75,7 @@ class MaterialDataTable extends React.PureComponent {
                                     resolve({
                                         data: result.data.data,
                                         page: result.data.page - 1,
-                                        totalCount: result.data.total,
+                                        totalCount: Number(result.data.total),
                                     })
                                 },
                                 error => {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { crudActions, confirmActions } from '../../_actions';
 
 import { TableAction } from '../../component/material-table/tableAction'
-import MaterialDataTable from '../../component/material-table/table'
+import MaterialDataTable from '../../component/material-table'
 
 const title = 'User List'
 class List extends React.Component {
