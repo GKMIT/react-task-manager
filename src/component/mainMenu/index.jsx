@@ -40,7 +40,7 @@ class MaterialUICollapseMenu extends Component {
                                 return (
                                     <div key={`listItemStart${itemIndex}`}>
                                         {item.subitems != null ? (
-                                            <MenuCollapse menu={menu} item={item} handleClick={this.handleClick} />
+                                            <MenuCollapse key={`MenuCollapse${item.id}`} menu={menu} item={item} handleClick={this.handleClick} />
                                         ) :
                                             (<MenuNode key={`MenuNode${item.id}`} data={item} />)
                                         }
