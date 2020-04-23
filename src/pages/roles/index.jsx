@@ -8,6 +8,19 @@ import MaterialDataTable from '../../component/material-table/table'
 const title = 'Role List'
 class List extends React.Component {
 
+    componentDidUpdate() {
+        if (this.props.confirm.confirm) {
+            if (Array.isArray(this.props.confirm.data)) {
+                this.props.confirm.data.map(value => this.deleteData(value.id))
+            } else {
+                if (this.props.confirm.data.id) {
+                    this.deleteData(this.props.confirm.data.id);
+                }
+            }
+            this.props.clearConfirm();
+        }
+    }
+
     deleteData = (id) => {
         this.props.deleteCrud('roles', 'roles', id);
     }
@@ -55,12 +68,11 @@ class List extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const { roles, confirm } = state;
-    return { listData: roles, confirm };
+    const { confirm } = state;
+    return { confirm };
 }
 
 const actionCreators = {
-    getAll: crudActions._getAll,
     deleteCrud: crudActions._delete,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,

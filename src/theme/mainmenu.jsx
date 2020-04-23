@@ -60,6 +60,12 @@ const items = [
                         "name": "Task List",
                         "link": "/tasks"
                     },
+                    {
+                        "id": "task-calender",
+                        "icon": "recent_actors",
+                        "name": "Task Calender",
+                        "link": "/task-calender"
+                    },
                 ]
             }
         ]
