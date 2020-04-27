@@ -76,8 +76,11 @@ class MuiForm extends React.Component {
     };
 
     handleNext = () => {
-        const { activeStep } = this.state
+        const { activeStep } = this.state        
         const { steps } = this.props
+
+        this.validator.hideMessages();
+
         let isValid = true
         if (steps) {
             steps.forEach((element, index) => {
@@ -100,7 +103,7 @@ class MuiForm extends React.Component {
         } else {
             this.validator.showMessages();
             this.forceUpdate();
-        }        
+        }
     };
 
     handleBack = () => {
@@ -177,9 +180,11 @@ class MuiForm extends React.Component {
                             if (step.optional) {
                                 labelProps.optional = <Typography variant="caption">Optional</Typography>;
                             }
+
                             if (this.isStepSkipped(index)) {
                                 stepProps.completed = false;
                             }
+
                             return (
                                 <Step key={step.label} {...stepProps}>
                                     <StepLabel {...labelProps}>{step.label}</StepLabel>
@@ -194,7 +199,7 @@ class MuiForm extends React.Component {
                             this.confirmPanel()
                         ) : (
                                 <div>
-
+                                    {/* start process form */}
                                     {steps.map((step, index) => {
                                         if (index === activeStep) {
                                             return (
@@ -315,6 +320,7 @@ class MuiForm extends React.Component {
                                         }
                                         return ''
                                     })}
+                                    {/* end process form */}
 
                                     {/* process buttons */}
                                     <div className={classes.stepButtonWrapper}>
@@ -342,7 +348,7 @@ class MuiForm extends React.Component {
                                             {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                         </Button>
                                     </div>
-
+                                    {/* end process buttons */}
                                 </div>
                             )}
                     </div>
