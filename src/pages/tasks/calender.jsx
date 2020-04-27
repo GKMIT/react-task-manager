@@ -15,9 +15,10 @@ class Calender extends React.Component {
     }
 
     dateClick = (e) => {
+        console.log(e)
         this.props.openModal({
             open: true,
-            component: <Form start_date={e.startStr} end_date={e.endStr} />
+            component: <Form start_date={e.startStr} end_date={moment(e.endStr).add(-1, 'days').format('YYYY-MM-DD')} />
         })
     }
 

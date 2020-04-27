@@ -17,10 +17,10 @@ class Form extends React.Component {
             form: {
                 user_id: '',
                 name: '',
-                start_date: new Date,
-                start_time: new Date,
-                end_date: new Date,
-                end_time: new Date,
+                start_date: new Date(),
+                start_time: new Date(),
+                end_date: new Date(),
+                end_time: new Date(),
                 details: ''
             },
         }

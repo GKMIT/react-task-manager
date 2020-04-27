@@ -17,9 +17,9 @@ class Form extends React.Component {
                 user_id: '',
                 name: '',
                 start_date: this.props.start_date,
-                start_time: new Date,
+                start_time: new Date(),
                 end_date: this.props.end_date,
-                end_time: new Date,
+                end_time: new Date(),
                 details: ''
             },
         }
