@@ -22,14 +22,13 @@ class Calender extends React.Component {
 
         this.props.openModal({
             open: true,
-            data,            
+            data,
             component: <Form />
         })
     }
 
     render() {
         const { events } = this.props
-        console.warn(events)
         return (
             <React.Fragment>
                 <FullCalendar

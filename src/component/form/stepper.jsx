@@ -84,7 +84,7 @@ class MuiForm extends React.Component {
         let isValid = true
         if (steps) {
             steps.forEach((element, index) => {
-                if (activeStep == index) {
+                if (activeStep === index) {
                     if (element.formFields) {
                         element.formFields.forEach(formField => {
                             if (!this.validator.fieldValid(formField.name)) {
