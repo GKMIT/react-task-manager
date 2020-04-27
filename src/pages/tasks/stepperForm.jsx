@@ -1,197 +1,198 @@
 import React from 'react';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import MuiForm from '../../component/form/stepper'
 
-import TaskForm from './taskStepper/taskForm';
-import TaskDetailForm from './taskStepper/taskDetailForm';
-import TaskConfirmForm from './taskStepper/taskConfirmForm';
+import { connect } from 'react-redux';
+import { crudActions, alertActions } from '../../_actions';
 
-const styles = (theme) => ({
-    root: {
-        width: '100%',
-    },
-    button: {
-        marginRight: theme.spacing(1),
-    },
-    instructions: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-    },
-})
-
-
-class StepperForm extends React.Component {
+class Form extends React.Component {
 
     constructor() {
         super()
         this.state = {
-            steps: [
+            title: 'Create task',
+            submitText: 'Create',
+            action: 'create',
+            id: null,
+            form: {
+                user_id: '',
+                name: '',
+                start_date: '',
+                start_time: '',
+                end_date: '',
+                end_time: '',
+                details: ''
+            },
+        }
+    }
+
+    createForm = () => {
+        const { form } = this.state
+        const { users } = this.props
+        let steps = []
+
+        steps.push({
+            label: 'Select User',
+            formFields: [
                 {
-                    label: 'Select User',
-                    optional: false,
-                    component: <TaskForm />
-                },
-                {
-                    label: 'Select dd',
-                    optional: false,
-                    component: <TaskForm />
-                },
-                {
-                    label: 'Create details',
-                    optional: true,
-                    component: <TaskDetailForm />
-                },
-                {
-                    label: 'Confirm task',
-                    optional: false,
-                    component: <TaskConfirmForm />
+                    name: 'user_id',
+                    label: 'User',
+                    type: 'select',
+                    icon: '',
+                    value: form.user_id,
+                    options: users,
+                    validation: 'required',
                 }
-            ],
-            activeStep: 0,
-            skipped: null
+            ]
+        })
+
+
+        steps.push({
+            label: 'Task Details',
+            formFields: [
+                {
+                    name: 'name',
+                    label: 'Name',
+                    type: 'text',
+                    icon: '',
+                    value: form.name,
+                    validation: 'required',
+                },
+                {
+                    name: 'details',
+                    label: 'Details',
+                    type: 'text',
+                    icon: '',
+                    value: form.details,
+                    validation: 'required',
+                }
+            ]
+        })
+
+        steps.push({
+            label: 'Task Date & time',
+            formFields: [
+                {
+                    name: 'start_date',
+                    label: 'Start Date',
+                    type: 'date',
+                    variant: 'inline',
+                    format: 'DD-MM-YYYY',
+                    value: form.start_date,
+                    validation: 'required',
+                },
+                {
+                    name: 'start_time',
+                    label: 'Start Time',
+                    type: 'time',
+                    variant: 'inline',
+                    format: 'hh:mm A',
+                    value: form.start_time,
+                    validation: 'required',
+                },
+                {
+                    name: 'end_date',
+                    label: 'End Date',
+                    type: 'date',
+                    variant: 'inline',
+                    format: 'DD-MM-YYYY',
+                    value: form.end_date,
+                    validation: 'required',
+                },
+                {
+                    name: 'end_time',
+                    label: 'End Time',
+                    type: 'time',
+                    variant: 'inline',
+                    format: 'hh:mm A',
+                    value: form.end_time,
+                    validation: 'required',
+                }
+            ]
+        })
+
+        return steps
+    }
+
+    componentDidMount() {
+        const { id } = this.props
+        this.props.getAll('users', 'users')
+        if (id && id !== 'new') {
+            this.props.getData('task', 'tasks', id)
         }
     }
 
-    setActiveStep = (value) => {
-        this.setState({
-            activeStep: value
-        })
+    static getDerivedStateFromProps(props) {
+        let newState = {};
+        if (props.id !== 'new' && props.form !== null) {
+            newState.id = props.id
+            newState.title = 'Edit Task'
+            newState.submitText = 'Edit'
+            newState.action = 'update'
+            newState.form = props.form
+        }
+        return newState
     }
 
-    setSkipped = (value) => {
-        this.setState({
-            skipped: value
-        })
+
+    handleChange = (value, name) => {
+        const { form } = this.state
+        form[name] = value
+        this.setState(form)
     }
 
-    isStepOptional = (step) => {
-        const { steps } = this.state
-        const optional = steps.findIndex(step => step.optional === true)
-        return step === optional;
-    };
-
-    isStepSkipped = (step) => {
-        const { skipped } = this.state
-        return step === skipped;
-    };
-
-    handleNext = () => {
-        const { activeStep } = this.state
-        this.isStepSkipped(activeStep)
-        this.setActiveStep(activeStep + 1);
-        this.setSkipped(activeStep + 1);
-    };
-
-    handleBack = () => {
-        const { activeStep } = this.state
-        this.setActiveStep(activeStep - 1);
-    };
-
-    handleSkip = () => {
-        const { activeStep } = this.state
-        if (!this.isStepOptional(activeStep)) {
-            // You probably want to guard against something like this,
-            // it should never occur unless someone's actively trying to break something.
-            throw new Error("You can't skip a step that isn't optional.");
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const { action, id, form } = this.state
+        if (form) {
+            const formData = {
+                user_id: form.user_id,
+                name: form.name,
+                start_date: form.start_date,
+                start_time: form.start_time,
+                end_date: form.end_date,
+                end_time: form.end_time,
+                details: form.details,
+            }
+            if (action === 'update') {
+                this.props.updateData('task', 'tasks', id, formData)
+            } else {
+                this.props.createData('task', 'tasks', formData)
+            }
+            this.props.history.push('/tasks')
         }
 
-        this.setActiveStep(activeStep + 1);
-        this.setSkipped(activeStep);
-    };
-
-    handleReset = () => {
-        this.setActiveStep(0);
-    };
-
-    confirmPanel = () => {
-        const { classes } = this.props
-        return (
-            <React.Fragment>
-                <Typography className={classes.instructions}>
-                    All steps completed - you&apos;re finished
-                </Typography>
-                <Button onClick={this.handleReset} className={classes.button}>
-                    Reset
-                </Button>
-            </React.Fragment>
-        )
     }
 
     render() {
-        const { activeStep, steps } = this.state
-        const { classes } = this.props
-
+        const { submitText } = this.state
         return (
-            <React.Fragment>
-                <div className={classes.root}>
-                    <Stepper activeStep={activeStep}>
-                        {steps.map((step, index) => {
-                            const stepProps = {};
-                            const labelProps = {};
-
-                            if (step.optional) {
-                                labelProps.optional = <Typography variant="caption">Optional</Typography>;
-                            }
-                            if (this.isStepSkipped(index)) {
-                                stepProps.completed = false;
-                            }
-                            return (
-                                <Step key={step.label} {...stepProps}>
-                                    <StepLabel {...labelProps}>{step.label}</StepLabel>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
-                    <div>
-                        {activeStep === steps.length ? (
-                            this.confirmPanel()
-                        ) : (
-                                <div>
-
-                                    {steps.map((step, index) => {
-                                        if (index === activeStep) {
-                                            return (step.component)
-                                        }
-                                        return ''
-                                    })}
-
-
-                                    <div>
-                                        <Button disabled={activeStep === 0} onClick={this.handleBack} className={classes.button}>
-                                            Back
-                                        </Button>
-
-                                        {this.isStepOptional(activeStep) && (
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={this.handleSkip}
-                                                className={classes.button}
-                                            >
-                                                Skip
-                                            </Button>
-                                        )}
-
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.handleNext}
-                                            className={classes.button}
-                                        >
-                                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                        </Button>
-                                    </div>
-                                </div>
-                            )}
-                    </div>
-                </div>
-            </React.Fragment>
+            <MuiForm
+                steps={this.createForm()}
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+                submitText={submitText}
+                submitFullWidth={false}
+                fullWidth={true}
+                noValidate={false}
+            />
         );
     }
 }
 
-export default withStyles(styles)(StepperForm);
+function mapState(state) {
+    const { task, users } = state;
+    return {
+        form: task,
+        users
+    };
+}
+
+const actionCreators = {
+    getAll: crudActions._getAll,
+    getData: crudActions._get,
+    showError: alertActions.error,
+    createData: crudActions._create,
+    updateData: crudActions._update,
+};
+
+export default connect(mapState, actionCreators)(Form);
