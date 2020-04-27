@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React from 'react';
 import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
@@ -27,7 +28,7 @@ class MuiDatePicker extends React.Component {
                             margin="normal"
                             required={required}
                             label={label}
-                            value={value}
+                            value={moment(value).format('YYYY-MM-DD')}
                             name={name}
                             onChange={e => this.handleChange(e, name, index)}
                             KeyboardButtonProps={{

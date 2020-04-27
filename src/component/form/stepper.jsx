@@ -76,7 +76,7 @@ class MuiForm extends React.Component {
     };
 
     handleNext = () => {
-        const { activeStep } = this.state        
+        const { activeStep } = this.state
         const { steps } = this.props
 
         this.validator.hideMessages();
@@ -167,7 +167,7 @@ class MuiForm extends React.Component {
     render() {
         const { activeStep } = this.state
         const { steps, classes, fullWidth } = this.props
-
+        console.warn('steps', steps)
         return (
             <React.Fragment>
                 <form className={classes.form} noValidate onSubmit={this.handleSubmit}>

@@ -6,8 +6,8 @@ import { crudActions, alertActions } from '../../_actions';
 
 class Form extends React.Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             title: 'Create task',
             submitText: 'Create',
@@ -16,17 +16,17 @@ class Form extends React.Component {
             form: {
                 user_id: '',
                 name: '',
-                start_date: '',
-                start_time: '',
-                end_date: '',
-                end_time: '',
+                start_date: this.props.start_date,
+                start_time: new Date,
+                end_date: this.props.end_date,
+                end_time: new Date,
                 details: ''
             },
         }
     }
 
     createForm = () => {
-        const { form } = this.state
+        const { form } = this.state        
         const { users } = this.props
         let steps = []
 
@@ -63,7 +63,7 @@ class Form extends React.Component {
                     type: 'text',
                     icon: '',
                     value: form.details,
-                    validation: 'required',
+                    validation: 'min:1',
                 }
             ]
         })

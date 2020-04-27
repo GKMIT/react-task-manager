@@ -26,7 +26,7 @@ class MuiTimePicker extends React.Component {
                             format={format}
                             margin="normal"
                             required={required}
-                            label={label}
+                            label={label}                            
                             value={value}
                             name={name}
                             onChange={e => this.handleChange(e, name, index)}
