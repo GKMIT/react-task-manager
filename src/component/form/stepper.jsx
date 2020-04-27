@@ -21,8 +21,12 @@ const styles = (theme) => ({
     button: {
         marginRight: theme.spacing(1),
     },
-    instructions: {
+    stepWrapper: {
         marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+    stepButtonWrapper: {
+        marginTop: theme.spacing(3),
         marginBottom: theme.spacing(1),
     },
     form: {
@@ -73,9 +77,30 @@ class MuiForm extends React.Component {
 
     handleNext = () => {
         const { activeStep } = this.state
-        this.isStepSkipped(activeStep)
-        this.setActiveStep(activeStep + 1);
-        this.setSkipped(activeStep + 1);
+        const { steps } = this.props
+        let isValid = true
+        if (steps) {
+            steps.forEach((element, index) => {
+                if (activeStep == index) {
+                    if (element.formFields) {
+                        element.formFields.forEach(formField => {
+                            if (!this.validator.fieldValid(formField.name)) {
+                                isValid = false
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        if (isValid) {
+            this.isStepSkipped(activeStep)
+            this.setActiveStep(activeStep + 1);
+            this.setSkipped(activeStep + 1);
+        } else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }        
     };
 
     handleBack = () => {
@@ -103,7 +128,7 @@ class MuiForm extends React.Component {
         const { classes, submitText, submitFullWidth } = this.props
         return (
             <React.Fragment>
-                <Typography className={classes.instructions}>
+                <Typography className={classes.stepWrapper}>
                     All steps completed - you&apos;re finished
                 </Typography>
                 <Button onClick={this.handleReset} className={classes.button}>
@@ -139,7 +164,7 @@ class MuiForm extends React.Component {
     render() {
         const { activeStep } = this.state
         const { steps, classes, fullWidth } = this.props
-        console.warn('steps', steps)
+
         return (
             <React.Fragment>
                 <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
@@ -291,8 +316,8 @@ class MuiForm extends React.Component {
                                         return ''
                                     })}
 
-
-                                    <div>
+                                    {/* process buttons */}
+                                    <div className={classes.stepButtonWrapper}>
                                         <Button disabled={activeStep === 0} onClick={this.handleBack} className={classes.button}>
                                             Back
                                         </Button>
@@ -317,6 +342,7 @@ class MuiForm extends React.Component {
                                             {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                         </Button>
                                     </div>
+
                                 </div>
                             )}
                     </div>
