@@ -16,8 +16,8 @@ const useStyles = (theme => ({
 
 class MaterialUICollapseMenu extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super()
         this.state = { menu: [] };
         this.handleClick = this.handleClick.bind(this);
     }

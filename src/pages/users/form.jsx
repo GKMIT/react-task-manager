@@ -7,8 +7,8 @@ import { crudActions, alertActions } from '../../_actions';
 
 class Form extends React.Component {
 
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             title: 'Create user',
             submitText: 'Create',

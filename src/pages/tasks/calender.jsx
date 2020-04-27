@@ -13,8 +13,13 @@ class Calender extends React.Component {
         this.props.getAll('tasks', 'tasks/all')
     }
 
+    dateClick = (e) => {
+        console.warn(e)
+    }
+
     render() {
         const { events } = this.props
+        console.warn(events)
         return (
             <React.Fragment>
                 <FullCalendar
@@ -24,8 +29,10 @@ class Calender extends React.Component {
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                     }}
+                    selectable={true}
                     plugins={[dayGridPlugin, listPlugin, timeGridPlugin, interactionPlugin]}
                     events={events}
+                    select={this.dateClick}
 
                 />
             </React.Fragment>
@@ -51,8 +58,12 @@ const mapStateToProps = (state) => {
             events.push({
                 title: element.name,
                 description: element.details,
-                start: moment(element.start_date).format('YYYY-MM-DD'),
-                end: moment(element.end_date).add(1, 'days').format('YYYY-MM-DD'),
+                allDay: false,
+                // for only date binding
+                // start: moment(element.start_date).format('YYYY-MM-DD'),                
+                // end: moment(element.end_date).add(1, 'days').format('YYYY-MM-DD'),
+                start: `${moment(element.start_date).format('YYYY-MM-DD')}T${moment(element.start_time).format('hh:mm:ssZ')}`,
+                end: `${moment(element.end_date).format('YYYY-MM-DD')}T${moment(element.end_time).format('hh:mm:ssZ')}`,
                 color: getRandomColor(),
             })
         });

@@ -20,6 +20,7 @@ class App extends React.Component {
             <React.Fragment>
 
                 <Loader open={this.props.loader} />
+
                 {this.props.confirm.show &&
                     <AlertConfirmDialog
                         title={this.props.confirm.title}

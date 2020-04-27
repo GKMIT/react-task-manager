@@ -8,8 +8,8 @@ import Icon from '@material-ui/core/Icon';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 class MuiPassTextBox extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             showPassword: false
         }
