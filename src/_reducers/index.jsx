@@ -7,6 +7,7 @@ import { confirm } from './confirm.reducer';
 import { fileUpload } from './file.reducer';
 import crud from './crud.reducer';
 import { reducerData } from './assign.reducer';
+import { modal } from './modal.reducer';
 
 const reducers = {}
 reducers['authentication'] = authentication
@@ -14,6 +15,7 @@ reducers['loader'] = loader
 reducers['alert'] = alert
 reducers['confirm'] = confirm
 reducers['fileUpload'] = fileUpload
+reducers['modal'] = modal
 
 reducerData.forEach(element => {
     reducers[element] = crud(element)

@@ -6,7 +6,8 @@ import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction";
 import { connect } from 'react-redux';
-import { crudActions, confirmActions } from '../../_actions';
+import { crudActions, confirmActions, modalActions } from '../../_actions';
+import Form from "./stepperForm";
 
 class Calender extends React.Component {
     componentDidMount() {
@@ -14,7 +15,16 @@ class Calender extends React.Component {
     }
 
     dateClick = (e) => {
-        console.warn(e)
+        const data = {
+            start_date: e.startStr,
+            end_date: e.endStr,
+        }
+
+        this.props.openModal({
+            open: true,
+            data,            
+            component: <Form />
+        })
     }
 
     render() {
@@ -76,6 +86,7 @@ const actionCreators = {
     getAll: crudActions._getAll,
     showConfirm: confirmActions.show,
     clearConfirm: confirmActions.clear,
+    openModal: modalActions.open,
 }
 
 export default connect(mapStateToProps, actionCreators)(Calender);
