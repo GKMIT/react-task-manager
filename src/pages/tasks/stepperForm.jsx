@@ -2,7 +2,7 @@ import React from 'react';
 import MuiForm from '../../component/form/stepper'
 
 import { connect } from 'react-redux';
-import { crudActions, alertActions } from '../../_actions';
+import { crudActions, alertActions,modalActions } from '../../_actions';
 
 class Form extends React.Component {
 
@@ -157,10 +157,9 @@ class Form extends React.Component {
                 this.props.updateData('task', 'tasks', id, formData)
             } else {
                 this.props.createData('task', 'tasks', formData)
-            }
-            this.props.history.push('/tasks')
+            }      
+            this.props.closeModal();      
         }
-
     }
 
     render() {
@@ -193,6 +192,7 @@ const actionCreators = {
     showError: alertActions.error,
     createData: crudActions._create,
     updateData: crudActions._update,
+    closeModal: modalActions.close,
 };
 
 export default connect(mapState, actionCreators)(Form);
