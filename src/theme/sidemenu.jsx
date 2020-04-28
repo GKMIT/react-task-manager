@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 import { userActions } from '../_actions';
 
 class SideMenu extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             openMenu: false,
             anchorEl: null

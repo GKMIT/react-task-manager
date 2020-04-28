@@ -42,8 +42,8 @@ const styles = (theme) => ({
 
 class Login extends React.Component {
 
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             title: 'Sign in',
             submitText: 'Sign in',

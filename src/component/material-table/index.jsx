@@ -9,7 +9,7 @@ class MaterialDataTable extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            columns: props.columns
+            columns: this.props.columns
         }
 
         this.tableRef = React.createRef();

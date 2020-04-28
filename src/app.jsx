@@ -8,6 +8,7 @@ import { loaderActions, confirmActions, alertActions } from './_actions';
 import Loader from './component/alert/loader';
 import AlertConfirmDialog from './component/alert/alertConfirmDialog';
 import AlertMessage from './component/alert/alertMessage';
+import Modal from './component/modal';
 class App extends React.Component {
 
     componentDidMount() {
@@ -20,6 +21,9 @@ class App extends React.Component {
             <React.Fragment>
 
                 <Loader open={this.props.loader} />
+
+                {this.props.modal.open && <Modal open={this.props.modal.open} />}                
+
                 {this.props.confirm.show &&
                     <AlertConfirmDialog
                         title={this.props.confirm.title}
@@ -50,8 +54,8 @@ class App extends React.Component {
 
 
 function mapState(state) {
-    const { alert, loader, confirm } = state;
-    return { alert, loader, confirm };
+    const { alert, loader, modal, confirm } = state;
+    return { alert, loader, modal, confirm };
 }
 
 const actionCreators = {

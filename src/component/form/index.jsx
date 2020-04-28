@@ -23,8 +23,8 @@ const styles = (theme) => ({
 });
 
 class MuiForm extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.validator = new SimpleReactValidator({
             autoForceUpdate: this,
             element: message => message
