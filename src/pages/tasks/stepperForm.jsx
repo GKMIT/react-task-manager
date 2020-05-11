@@ -2,7 +2,7 @@ import React from 'react';
 import MuiForm from '../../component/form/stepper'
 
 import { connect } from 'react-redux';
-import { crudActions, alertActions,modalActions } from '../../_actions';
+import { crudActions, alertActions, modalActions, fileActions } from '../../_actions';
 
 class Form extends React.Component {
 
@@ -20,13 +20,14 @@ class Form extends React.Component {
                 start_time: new Date(),
                 end_date: this.props.end_date,
                 end_time: new Date(),
-                details: ''
+                details: '',
+                document: '',
             },
         }
     }
 
     createForm = () => {
-        const { form } = this.state        
+        const { form } = this.state
         const { users } = this.props
         let steps = []
 
@@ -41,6 +42,16 @@ class Form extends React.Component {
                     value: form.user_id,
                     options: users,
                     validation: 'required',
+                },
+                {
+                    name: 'document',
+                    label: 'Document',
+                    type: 'file',
+                    icon: 'cloud_upload',
+                    value: form.document,
+                    validation: 'required',
+                    editable: true,
+                    accept: 'application/pdf,application/msword',
                 }
             ]
         })
@@ -126,7 +137,7 @@ class Form extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps(props) {
+    static getDerivedStateFromProps(props, state) {
         let newState = {};
         if (props.id !== 'new' && props.form !== null) {
             newState.id = props.id
@@ -134,7 +145,15 @@ class Form extends React.Component {
             newState.submitText = 'Edit'
             newState.action = 'update'
             newState.form = props.form
+        } else {
+            newState.form = state.form
         }
+
+        if (props.fileUpload !== null) {
+            newState.form.document = props.fileUpload.result
+            props.clearUpload();
+        }
+
         return newState
     }
 
@@ -143,6 +162,10 @@ class Form extends React.Component {
         const { form } = this.state
         form[name] = value
         this.setState(form)
+    }
+
+    fileUpload = (file) => {
+        this.props.upload(file, 'document')
     }
 
     handleSubmit = (event) => {
@@ -157,13 +180,14 @@ class Form extends React.Component {
                 end_date: form.end_date,
                 end_time: form.end_time,
                 details: form.details,
+                document: form.document,
             }
             if (action === 'update') {
                 this.props.updateData('task', 'tasks', id, formData)
             } else {
                 this.props.createData('task', 'tasks', formData)
-            }      
-            this.props.closeModal();      
+            }
+            this.props.closeModal();
         }
     }
 
@@ -173,6 +197,7 @@ class Form extends React.Component {
             <MuiForm
                 steps={this.createForm()}
                 handleChange={this.handleChange}
+                fileUpload={this.fileUpload}
                 handleSubmit={this.handleSubmit}
                 submitText={submitText}
                 submitFullWidth={false}
@@ -184,10 +209,11 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { task, users } = state;
+    const { task, users, fileUpload } = state;
     return {
         form: task,
-        users
+        users,
+        fileUpload
     };
 }
 
@@ -198,6 +224,8 @@ const actionCreators = {
     createData: crudActions._create,
     updateData: crudActions._update,
     closeModal: modalActions.close,
+    upload: fileActions._upload,
+    clearUpload: fileActions._clear,
 };
 
 export default connect(mapState, actionCreators)(Form);

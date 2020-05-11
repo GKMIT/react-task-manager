@@ -98,7 +98,7 @@ class Form extends React.Component {
         this.props.getAll('roles', 'roles')
     }
 
-    static getDerivedStateFromProps(props) {
+    static getDerivedStateFromProps(props, state) {
         let newState = {};
         if (props.match.params.id !== 'new' && props.form !== null) {
             newState.id = props.match.params.id
@@ -106,6 +106,8 @@ class Form extends React.Component {
             newState.submitText = 'Edit'
             newState.action = 'update'
             newState.form = props.form
+        } else {
+            newState.form = state.form
         }
 
         if (props.fileUpload !== null) {
@@ -136,6 +138,7 @@ class Form extends React.Component {
                 mobile: form.mobile,
                 email: form.email,
                 dob: form.dob,
+                image: form.image,
             }
             if (action === 'update') {
                 this.props.updateData('user', 'users', id, formData)
