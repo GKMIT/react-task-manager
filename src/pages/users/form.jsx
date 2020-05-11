@@ -3,7 +3,7 @@ import MuiForm from '../../component/form'
 import FormLayout from '../../theme/formLayout'
 
 import { connect } from 'react-redux';
-import { crudActions, alertActions } from '../../_actions';
+import { crudActions, fileActions, alertActions } from '../../_actions';
 
 class Form extends React.Component {
 
@@ -19,6 +19,7 @@ class Form extends React.Component {
                 name: '',
                 mobile: '',
                 email: '',
+                image: '',
                 dob: new Date()
             },
         }
@@ -47,6 +48,7 @@ class Form extends React.Component {
             value: form.name,
             validation: 'required',
         })
+
         formFields.push({
             name: 'mobile',
             label: 'mobile',
@@ -54,6 +56,17 @@ class Form extends React.Component {
             icon: 'call',
             value: form.mobile,
             validation: 'required',
+        })
+
+        formFields.push({
+            name: 'image',
+            label: 'profile',
+            type: 'file',
+            icon: 'cloud_upload',
+            value: form.image,
+            validation: 'required',
+            editable: true,
+            accept: 'image/*',
         })
 
         formFields.push({
@@ -94,6 +107,12 @@ class Form extends React.Component {
             newState.action = 'update'
             newState.form = props.form
         }
+
+        if (props.fileUpload !== null) {
+            newState.form.image = props.fileUpload.result
+            props.clearUpload();
+        }
+
         return newState
     }
 
@@ -101,6 +120,10 @@ class Form extends React.Component {
         const { form } = this.state
         form[name] = value
         this.setState(form)
+    }
+
+    fileUpload = (file) => {
+        this.props.upload(file, 'image')
     }
 
     handleSubmit = (event) => {
@@ -131,6 +154,7 @@ class Form extends React.Component {
                 <MuiForm
                     formFields={this.createForm()}
                     handleChange={this.handleChange}
+                    fileUpload={this.fileUpload}
                     handleSubmit={this.handleSubmit}
                     submitText={submitText}
                     submitFullWidth={true}
@@ -143,10 +167,11 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { user, roles } = state;
+    const { user, roles, fileUpload } = state;
     return {
         form: user,
-        roles
+        roles,
+        fileUpload
     };
 }
 
@@ -156,6 +181,8 @@ const actionCreators = {
     showError: alertActions.error,
     createData: crudActions._create,
     updateData: crudActions._update,
+    upload: fileActions._upload,
+    clearUpload: fileActions._clear,
 };
 
 export default connect(mapState, actionCreators)(Form);
