@@ -10,6 +10,7 @@ import MuiSelectBox from './selectbox'
 import MuiMultiSelectBox from './multiselectbox'
 import MuiDatePicker from './date'
 import MuiTimePicker from './time'
+import FileField from './file'
 
 
 const styles = (theme) => ({
@@ -33,6 +34,10 @@ class MuiForm extends React.Component {
 
     handleChange = (value, index) => {
         this.props.handleChange(value, index)
+    }
+
+    fileUpload = (file) => {
+        this.props.fileUpload(file)
     }
 
     handleSubmit = (event) => {
@@ -96,6 +101,25 @@ class MuiForm extends React.Component {
                                         key={index}
                                         value={form.value}
                                         handleChange={this.handleChange}
+                                    />
+                                )
+
+                            case 'file':
+                                return (
+                                    <FileField
+                                        label={form.label}
+                                        name={form.name}
+                                        type={form.type}
+                                        icon={form.icon}
+                                        fullWidth={fullWidth}
+                                        helperText={this.validator.message(form.name, form.value, form.validation)}
+                                        index={index}
+                                        key={index}
+                                        value={form.value}
+                                        editable={form.editable}
+                                        accept={form.accept}
+                                        handleChange={this.handleChange}
+                                        fileUpload={this.fileUpload}
                                     />
                                 )
                             case 'checkbox':

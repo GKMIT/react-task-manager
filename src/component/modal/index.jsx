@@ -12,7 +12,15 @@ class MuiModal extends React.Component {
     }
 
     render() {
-        const { open } = this.props
+        const { open, width, height } = this.props
+
+        const customContentStyle = {
+            width: `${width}px`,
+            maxWidth: `${width}px`,
+            height: `${height}px`,
+            maxHeight: `${height}px`,
+        };
+
         return (
 
             <Dialog
@@ -22,7 +30,7 @@ class MuiModal extends React.Component {
                 aria-describedby="alert-dialog-description"
             >
                 {this.props.modal.title && <DialogTitle id="alert-dialog-title">{this.props.modal.title}</DialogTitle>}
-                <DialogContent>
+                <DialogContent style={customContentStyle}>
                     {this.props.modal.component}
                 </DialogContent>
             </Dialog>
