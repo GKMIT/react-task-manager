@@ -69,7 +69,7 @@ class Form extends React.Component {
         })
 
         steps.push({
-            label: 'Task Date & time',
+            label: 'Start Date & time',
             formFields: [
                 {
                     name: 'start_date',
@@ -88,7 +88,12 @@ class Form extends React.Component {
                     format: 'hh:mm A',
                     value: form.start_time,
                     validation: 'required',
-                },
+                }
+            ]
+        })
+        steps.push({
+            label: 'End Date & time',
+            formFields: [
                 {
                     name: 'end_date',
                     label: 'End Date',

@@ -19,7 +19,7 @@ class Form extends React.Component {
                 name: '',
                 mobile: '',
                 email: '',
-                dob: ''
+                dob: new Date()
             },
         }
     }
