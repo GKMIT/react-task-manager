@@ -11,31 +11,34 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,                
+        color: '#fff',
         textAlign: 'center',
-        boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    loaderText: {
+        marginLeft: 10
+    }
 }));
 
 export default function Loader(props) {
     const classes = useStyles();
 
     return (
-        <div>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={props.open}
-            >
-                <Fade in={props.open}>
-                    <div className={classes.paper}>
-                        <CircularProgress/>
-                        <p>Loading...</p>
-                    </div>
-                </Fade>
-            </Modal>
-        </div>
+        <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={props.open}
+            disablePortal
+            disableEnforceFocus
+            disableAutoFocus
+        >
+            <Fade in={props.open}>
+                <div className={classes.paper}>
+                    <CircularProgress color="inherit" />
+                    <p className={classes.loaderText}>Loading...</p>
+                </div>
+            </Fade>
+        </Modal>
     );
 }
