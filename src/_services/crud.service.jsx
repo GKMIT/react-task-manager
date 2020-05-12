@@ -37,28 +37,14 @@ function _getAll(type, filterData) {
         }
     }
 
-
-
     return apiConfig.get(`/${type}`, { params: filter })
-        .then(result => {
-            return result;
-        });
 }
 function _create(type, data) {
     return apiConfig.post(`/${type}`, data)
-        .then(result => {
-            return result;
-        });
 }
 function _update(type, id, data) {
     return apiConfig.put(`/${type}/${id}`, data)
-        .then(result => {
-            return result;
-        });
 }
 function _delete(type, id) {
     return apiConfig.delete(`/${type}/${id}`)
-        .then(result => {
-            return result;
-        });
 }

@@ -1,8 +1,6 @@
 import React from "react";
 import MaterialTable from 'material-table';
 import { crudService } from '../../_services';
-import { alertActions } from '../../_actions';
-import { connect } from 'react-redux';
 
 class MaterialDataTable extends React.PureComponent {
 
@@ -72,14 +70,13 @@ class MaterialDataTable extends React.PureComponent {
                         crudService._getAll(this.props.url, query)
                             .then(
                                 result => {
-                                    resolve({
-                                        data: result.data.data,
-                                        page: result.data.page - 1,
-                                        totalCount: Number(result.data.total),
-                                    })
-                                },
-                                error => {
-                                    this.props.showError(error.message)
+                                    if (result.status === 200) {
+                                        resolve({
+                                            data: result.data.data,
+                                            page: result.data.page - 1,
+                                            totalCount: Number(result.data.total),
+                                        })
+                                    }
                                 }
                             );
                     })
@@ -91,8 +88,4 @@ class MaterialDataTable extends React.PureComponent {
     }
 }
 
-const actionCreators = {
-    showError: alertActions.error,
-}
-
-export default connect(null, actionCreators)(MaterialDataTable);
+export default MaterialDataTable;
