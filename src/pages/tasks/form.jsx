@@ -17,6 +17,7 @@ class Form extends React.Component {
             form: {
                 user_id: '',
                 name: '',
+                datetime: new Date(),
                 start_date: new Date(),
                 start_time: new Date(),
                 end_date: new Date(),
@@ -47,6 +48,16 @@ class Form extends React.Component {
             icon: '',
             value: form.name,
             validation: 'required',
+        })
+
+        formFields.push({
+            name: 'datetime',
+            label: 'Date Time',
+            type: 'datetime',
+            variant: 'inline',
+            format: 'DD-MM-YYYY hh:mm A',
+            value: form.datetime,
+            validation: '',
         })
 
         formFields.push({

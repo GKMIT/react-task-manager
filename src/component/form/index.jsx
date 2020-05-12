@@ -11,6 +11,7 @@ import MuiMultiSelectBox from './multiselectbox'
 import MuiDatePicker from './date'
 import MuiTimePicker from './time'
 import FileField from './file'
+import MuiDateTimePicker from './datetime'
 
 
 const styles = (theme) => ({
@@ -140,6 +141,22 @@ class MuiForm extends React.Component {
                             case 'date':
                                 return (
                                     <MuiDatePicker
+                                        label={form.label}
+                                        name={form.name}
+                                        required={form.required}
+                                        fullWidth={fullWidth}
+                                        helperText={this.validator.message(form.name, form.value, form.validation)}
+                                        index={index}
+                                        key={index}
+                                        value={form.value}
+                                        variant={form.variant}
+                                        format={form.format}
+                                        handleChange={this.handleChange}
+                                    />
+                                )
+                            case 'datetime':
+                                return (
+                                    <MuiDateTimePicker
                                         label={form.label}
                                         name={form.name}
                                         required={form.required}
