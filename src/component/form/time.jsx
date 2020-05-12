@@ -21,19 +21,16 @@ class MuiTimePicker extends React.Component {
 
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                         <KeyboardTimePicker
-                            disableToolbar
+                            clearable
+                            autoOk
                             variant={variant}
                             format={format}
                             margin="normal"
                             required={required}
-                            label={label}                            
+                            label={label}
                             value={value}
                             name={name}
                             onChange={e => this.handleChange(e, name, index)}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            animateYearScrolling
                         />
                     </MuiPickersUtilsProvider>
 
