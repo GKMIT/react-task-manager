@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { authHeader, store } from '../_helpers'
-import { alertActions } from '../_actions';
+import { alertActions, userActions } from '../_actions';
 
 let apiUrl = ''
 
@@ -16,14 +16,15 @@ let instance = axios.create({
 
 const { dispatch } = store
 const successHandler = (response) => {
-    if (response.status === 401) {
-        window.location.reload(true);
-    }
     return response
 }
 
 const errorHandler = (error) => {
-    dispatch(alertActions.error(error.response.statusText))
+    const { response } = error
+    if (response.status === 401) {
+        dispatch(userActions.logout())
+    }
+    dispatch(alertActions.error(response.statusText))
     return error
 }
 

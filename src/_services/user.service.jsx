@@ -12,7 +12,7 @@ function login(email, password) {
 
     return apiConfig.post(`/auth/login`, user)        
         .then(data => {
-            localStorage.setItem('user', JSON.stringify(data.data));
+            localStorage.setItem('user', JSON.stringify(data.data.data));
             return data;
         });
 }
