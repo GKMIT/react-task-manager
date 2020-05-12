@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Layout from './theme/layout';
 import { connect } from 'react-redux';
-
+import { withRouter } from 'react-router';
 import Dashboard from './pages/dashboard';
 
 import UserList from './pages/users';
@@ -49,4 +49,4 @@ function mapState(state) {
     return { loggedIn };
 }
 
-export default connect(mapState, null)(AdminRoutes);
+export default withRouter(connect(mapState, null)(AdminRoutes));
