@@ -133,7 +133,7 @@ class Form extends React.Component {
         const { id } = this.props
         this.props.getAll('users', 'users')
         if (id && id !== 'new') {
-            this.props.getData('task', 'tasks', id)
+            this.props.getData('form', 'tasks', id)
         }
     }
 
@@ -209,9 +209,9 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { task, users, fileUpload } = state;
+    const { form, users, fileUpload } = state;
     return {
-        form: task,
+        form: form,
         users,
         fileUpload
     };

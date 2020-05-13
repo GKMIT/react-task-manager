@@ -15,7 +15,7 @@ function _get(type, id) {
 }
 function _getAll(type, filterData) {
     let filters = []
-    let filter
+    let filter=[]
     if (filterData) {
         if (filterData.filters) {
             filterData.filters.map(filter => {
