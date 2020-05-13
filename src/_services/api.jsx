@@ -15,11 +15,28 @@ let instance = axios.create({
 
 const { dispatch } = store
 const successHandler = (response) => {
+    console.log('successHandler', response)
     if (response) {
         dispatch(loaderActions.hide());
     }
     return response
 }
+
+const parseError = (e) => {
+    if (!!e && !!e.response) {
+        if (!!e.response.data && !!e.response.data.message) {
+            return e.response.data.message
+        }
+        if (!!e.response.data && !!e.response.data.message && !!e.response.data.message.detail) {
+            return e.response.data.message.detail
+        }
+        if (!!e.response.statusText) {
+            return e.response.statusText
+        }
+    }
+    return 'Something went wrong!'
+}
+
 
 const errorHandler = (error) => {
     const { response } = error
@@ -27,7 +44,7 @@ const errorHandler = (error) => {
         if (response.status === 401) {
             dispatch(userActions.logout())
         }
-        dispatch(alertActions.error(response.statusText))
+        dispatch(alertActions.error(parseError(error)))
         dispatch(loaderActions.hide());
         return response
     }
