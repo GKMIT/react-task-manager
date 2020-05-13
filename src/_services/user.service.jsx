@@ -10,10 +10,9 @@ function login(email, password) {
         password
     };
 
-    return apiConfig.post(`/auth/login`, user)
-        .then(handleResponse)
+    return apiConfig.post(`/auth/login`, user)        
         .then(data => {
-            localStorage.setItem('user', JSON.stringify(data.data));
+            localStorage.setItem('user', JSON.stringify(data.data.data));
             return data;
         });
 }
@@ -21,18 +20,4 @@ function login(email, password) {
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
-}
-
-function handleResponse(response) {
-    if (response.status === 401) {
-        logout();
-        window.location.reload(true);
-    }
-
-    if (response.status !== 200) {
-        const error = (response.data && response.data.message) || response.statusText;
-        return Promise.reject(error);
-    }
-
-    return response.data;
 }

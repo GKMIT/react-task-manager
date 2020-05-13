@@ -22,7 +22,7 @@ class App extends React.Component {
 
                 <Loader open={this.props.loader} />
 
-                {this.props.modal.open && <Modal {...this.props.modal}/>}                
+                {this.props.modal.open && <Modal {...this.props.modal} />}
 
                 {this.props.confirm.show &&
                     <AlertConfirmDialog

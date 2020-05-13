@@ -21,7 +21,8 @@ class MuiDatePicker extends React.Component {
 
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                         <KeyboardDatePicker
-                            disableToolbar
+                            clearable
+                            autoOk
                             variant={variant}
                             format={format}
                             margin="normal"

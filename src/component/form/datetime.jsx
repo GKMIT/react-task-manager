@@ -1,17 +1,18 @@
 import React from 'react';
 import MomentUtils from '@date-io/moment';
-import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-class MuiTimePicker extends React.Component {
+class MuiDatePicker extends React.Component {
 
-    handleChange = (value, name, index) => {
+    handleChange = (value, name, index) => {        
         this.props.handleChange(value, name, index)
     }
 
     render() {
         const { name, label, value, required, fullWidth, helperText, index, variant, format } = this.props
+
         return (
             <React.Fragment>
                 <FormControl
@@ -20,7 +21,7 @@ class MuiTimePicker extends React.Component {
                 >
 
                     <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <KeyboardTimePicker
+                        <KeyboardDateTimePicker
                             clearable
                             autoOk
                             variant={variant}
@@ -31,6 +32,10 @@ class MuiTimePicker extends React.Component {
                             value={value}
                             name={name}
                             onChange={e => this.handleChange(e, name, index)}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                            animateYearScrolling
                         />
                     </MuiPickersUtilsProvider>
 
@@ -42,4 +47,4 @@ class MuiTimePicker extends React.Component {
     }
 }
 
-export default MuiTimePicker;
+export default MuiDatePicker;
