@@ -5,16 +5,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import { connect } from 'react-redux';
 import { crudActions } from '../../_actions';
 
-
-import MuiTextBox from './textbox'
-import MuiCheckBox from './checkbox'
-import MuiPassTextBox from './password'
-import MuiSelectBox from './selectbox'
-import MuiMultiSelectBox from './multiselectbox'
-import MuiDatePicker from './date'
-import MuiTimePicker from './time'
-import FileField from './file'
-import MuiDateTimePicker from './datetime'
+import RenderFormField from './renderFormField'
 
 
 const styles = (theme) => ({
@@ -56,6 +47,8 @@ class MuiForm extends React.Component {
     handleChange = (value, index) => {
         this.props.handleChange(value, index)
         this.clearFieldError()
+        this.validator.showMessages();
+        this.forceUpdate();
     }
 
     fileUpload = (file) => {
@@ -64,6 +57,7 @@ class MuiForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        console.log(this.validator.allValid())
         if (this.validator.allValid()) {
             this.props.handleSubmit(event)
         } else {
@@ -89,153 +83,18 @@ class MuiForm extends React.Component {
                             helperText = this.getFieldError(form.name)
                         }
 
-                        switch (form.type) {
-                            case 'select':
-                                return (
-                                    <MuiSelectBox
-                                        label={form.label}
-                                        name={form.name}
-                                        required={form.required}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        options={form.options}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-                            case 'multiselect':
-                                return (
-                                    <MuiMultiSelectBox
-                                        label={form.label}
-                                        name={form.name}
-                                        required={form.required}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        options={form.options}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-                            case 'password':
-                                return (
-                                    <MuiPassTextBox
-                                        label={form.label}
-                                        name={form.name}
-                                        required={form.required}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-
-                            case 'file':
-                                return (
-                                    <FileField
-                                        label={form.label}
-                                        name={form.name}
-                                        type={form.type}
-                                        icon={form.icon}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        editable={form.editable}
-                                        accept={form.accept}
-                                        handleChange={this.handleChange}
-                                        fileUpload={this.fileUpload}
-                                    />
-                                )
-                            case 'checkbox':
-                                return (
-                                    <MuiCheckBox
-                                        label={form.label}
-                                        name={form.name}
-                                        required={form.required}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-
-                            case 'date':
-                                return (
-                                    <MuiDatePicker
-                                        label={form.label}
-                                        name={form.name}
-                                        required={form.required}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        variant={form.variant}
-                                        format={form.format}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-                            case 'datetime':
-                                return (
-                                    <MuiDateTimePicker
-                                        label={form.label}
-                                        name={form.name}
-                                        required={form.required}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        variant={form.variant}
-                                        format={form.format}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-                            case 'time':
-                                return (
-                                    <MuiTimePicker
-                                        label={form.label}
-                                        name={form.name}
-                                        required={form.required}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        variant={form.variant}
-                                        format={form.format}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-
-                            default:
-                                return (
-                                    <MuiTextBox
-                                        label={form.label}
-                                        name={form.name}
-                                        type={form.type}
-                                        icon={form.icon}
-                                        multiline={form.multiline}
-                                        rowsMax={form.rowsMax}
-                                        fullWidth={fullWidth}
-                                        helperText={helperText}
-                                        index={index}
-                                        key={index}
-                                        value={form.value}
-                                        handleChange={this.handleChange}
-                                    />
-                                )
-                        }
+                        return (
+                            <RenderFormField
+                                fullWidth={fullWidth}
+                                helperText={helperText}
+                                index={index}
+                                form={form}
+                                handleChange={this.handleChange}
+                                fileUpload={this.fileUpload}
+                            />
+                        )
                     })}
+
 
 
                     <Button
