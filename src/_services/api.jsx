@@ -14,8 +14,7 @@ let instance = axios.create({
 
 
 const { dispatch } = store
-const successHandler = (response) => {
-    console.log('successHandler', response)
+const successHandler = (response) => {    
     if (response) {
         dispatch(loaderActions.hide());
     }
