@@ -14,7 +14,7 @@ let instance = axios.create({
 
 
 const { dispatch } = store
-const successHandler = (response) => {    
+const successHandler = (response) => {
     if (response) {
         dispatch(loaderActions.hide());
     }
@@ -23,11 +23,13 @@ const successHandler = (response) => {
 
 const parseError = (e) => {
     if (!!e && !!e.response) {
-        if (!!e.response.data && !!e.response.data.message) {
-            return e.response.data.message
-        }
-        if (!!e.response.data && !!e.response.data.message && !!e.response.data.message.detail) {
-            return e.response.data.message.detail
+        if (!!e.response.data) {
+            if (!!e.response.data.message && typeof e.response.data.message === 'string') {
+                return e.response.data.message
+            }
+            if (!!e.response.data.message && typeof e.response.data.message === 'object' && !!e.response.data.message.detail) {
+                return e.response.data.message.detail
+            }
         }
         if (!!e.response.statusText) {
             return e.response.statusText
