@@ -17,14 +17,13 @@ class Form extends React.Component {
             form: {
                 code: '',
                 details: ''
-            },
+            }
         }
     }
 
     createForm = () => {
         const { form } = this.state
         let formFields = []
-
         formFields.push({
             name: 'code',
             label: 'Code',
@@ -39,7 +38,7 @@ class Form extends React.Component {
             label: 'Details',
             type: 'text',
             value: form.details,
-            validation: 'required',
+            validation: null,
         })
 
         return formFields
@@ -54,6 +53,7 @@ class Form extends React.Component {
 
     static getDerivedStateFromProps(props) {
         let newState = {};
+
         if (props.match.params.id !== 'new' && props.form !== null) {
             newState.id = props.match.params.id
             newState.title = 'Edit Permission'
@@ -61,6 +61,11 @@ class Form extends React.Component {
             newState.action = 'update'
             newState.form = props.form
         }
+
+        if (props.formSubmit) {
+            props.history.push('/permissions')
+        }
+
         return newState
     }
 
@@ -83,9 +88,7 @@ class Form extends React.Component {
             } else {
                 this.props.createData('form', 'permissions', formData)
             }
-            this.props.history.push('/permissions')
         }
-
     }
 
     render() {
@@ -107,9 +110,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { form } = state;
+    const { form, formSubmit } = state;
     return {
-        form: form,
+        form,
+        formSubmit
     };
 }
 

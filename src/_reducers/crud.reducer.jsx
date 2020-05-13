@@ -42,6 +42,9 @@ const crud = (kind) => ((state = null, action) => {
         case `${kind}.${crudConstants.DELETE_FAILURE}`:
             return null
 
+        // add data
+        case `${kind}.${crudConstants.ADD}`:
+            return action.data
         // clear data
         case `${kind}.${crudConstants.CLEAR}`:
             return null

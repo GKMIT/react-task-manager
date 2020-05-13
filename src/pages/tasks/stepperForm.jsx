@@ -49,7 +49,7 @@ class Form extends React.Component {
                     type: 'file',
                     icon: 'cloud_upload',
                     value: form.document,
-                    validation: 'required',
+                    validation: null,
                     editable: true,
                     accept: 'application/pdf,application/msword',
                 }
@@ -154,6 +154,10 @@ class Form extends React.Component {
             props.clearUpload();
         }
 
+        if (props.formSubmit) {
+            props.closeModal();
+        }
+
         return newState
     }
 
@@ -187,7 +191,6 @@ class Form extends React.Component {
             } else {
                 this.props.createData('task', 'tasks', formData)
             }
-            this.props.closeModal();
         }
     }
 
@@ -209,9 +212,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { form, users, fileUpload } = state;
+    const { form, formSubmit, users, fileUpload } = state;
     return {
-        form: form,
+        form,
+        formSubmit,
         users,
         fileUpload
     };

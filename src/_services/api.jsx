@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { authHeader, store } from '../_helpers'
-import { alertActions, userActions } from '../_actions';
+import { alertActions, loaderActions, userActions, crudActions } from '../_actions';
 
 let apiUrl = ''
 
@@ -10,23 +10,41 @@ if (process.env.NODE_ENV === 'production') {
 
 let instance = axios.create({
     baseURL: apiUrl,
-    headers: authHeader(),
 });
 
 
 const { dispatch } = store
 const successHandler = (response) => {
+    if (response) {
+        dispatch(loaderActions.hide());
+    }
     return response
 }
 
 const errorHandler = (error) => {
     const { response } = error
-    if (response.status === 401) {
-        dispatch(userActions.logout())
+    if (response) {
+        if (response.status === 401) {
+            dispatch(userActions.logout())
+        }
+        dispatch(alertActions.error(response.statusText))
+        dispatch(loaderActions.hide());
+        return response
     }
-    dispatch(alertActions.error(response.statusText))
     return error
 }
+
+const requestHandler = (request) => {
+    if (request) {
+        dispatch(crudActions._clear('formSubmit'))
+    }
+    request.headers = authHeader();
+    return request
+}
+
+instance.interceptors.request.use(
+    request => requestHandler(request)
+)
 
 instance.interceptors.response.use(
     response => successHandler(response),

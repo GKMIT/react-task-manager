@@ -130,6 +130,9 @@ class Form extends React.Component {
             newState.action = 'update'
             newState.form = props.form
         }
+        if (props.formSubmit) {
+            props.history.push('/tasks')
+        }
         return newState
     }
 
@@ -158,9 +161,7 @@ class Form extends React.Component {
             } else {
                 this.props.createData('form', 'tasks', formData)
             }
-            this.props.history.push('/tasks')
         }
-
     }
 
     render() {
@@ -182,9 +183,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { form, users } = state;
+    const { form, formSubmit, users } = state;
     return {
-        form: form,
+        form,
+        formSubmit,
         users
     };
 }
