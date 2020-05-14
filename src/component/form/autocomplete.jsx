@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { crudService } from '../../_services';
 
 
 class MuiAutocompleteBox extends React.Component {
@@ -11,8 +13,31 @@ class MuiAutocompleteBox extends React.Component {
         super()
         this.state = {
             search: false,
-            searchText: ''
+            searchText: '',
+            options: []
         }
+    }
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
+    fetchData = () => {
+        const { url } = this.props
+        const { searchText } = this.state
+        const query = {
+            search: searchText
+        }
+        crudService._getAllData(url, query)
+            .then(
+                result => {
+                    if (result.status === 200) {
+                        this.setState({
+                            options: result.data.data,
+                        })
+                    }
+                }
+            );
     }
 
     handleChange = (e, value, name, index) => {
@@ -31,15 +56,16 @@ class MuiAutocompleteBox extends React.Component {
         let { searchText } = this.state
         searchText = e.target.value ? e.target.value : ''
         this.setState({ searchText: searchText, search: true })
+        this.fetchData()
     }
 
 
     render() {
-        const { name, value, label, required, fullWidth, options, helperText, index } = this.props
-        const { searchText, search } = this.state
+        const { name, value, label, required, fullWidth, helperText, index,getOptionLabel } = this.props
+        const { searchText, search, options } = this.state
 
         let selected
-        if (options && options.length) {
+        if (options) {
             selected = options.find(option => option.id === value)
         }
 
@@ -52,7 +78,7 @@ class MuiAutocompleteBox extends React.Component {
 
                     <Autocomplete
                         options={options}
-                        getOptionLabel={(option) => option.name}
+                        getOptionLabel={getOptionLabel}
                         onChange={(e, value) => this.handleChange(e, value, name, index)}
                         onInputChange={(e) => this.onInputChange(e, index)}
                         value={selected}
@@ -60,6 +86,7 @@ class MuiAutocompleteBox extends React.Component {
                         renderInput={(params) =>
                             <TextField
                                 {...params}
+                                key={name}
                                 name={name}
                                 required={required}
                                 label={label}
@@ -70,8 +97,22 @@ class MuiAutocompleteBox extends React.Component {
                 </FormControl>
             </React.Fragment>
         )
-
     }
 }
+
+MuiAutocompleteBox.propTypes = {
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.any.isRequired,
+    options: PropTypes.any.isRequired
+};
+
+MuiAutocompleteBox.defaultProps = {
+    name: "",
+    label: "",
+    value: "",
+    options: []
+}
+
 
 export default MuiAutocompleteBox;

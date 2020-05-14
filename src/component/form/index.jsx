@@ -84,6 +84,7 @@ class MuiForm extends React.Component {
 
                         return (
                             <RenderFormField
+                                key={index}
                                 fullWidth={fullWidth}
                                 helperText={helperText}
                                 index={index}

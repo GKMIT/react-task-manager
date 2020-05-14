@@ -3,6 +3,7 @@ import { apiConfig } from './api';
 export const crudService = {
     _get,
     _getAll,
+    _getAllData,
     _create,
     _update,
     _delete
@@ -13,9 +14,14 @@ function _get(type, id) {
             return result;
         });
 }
+
+function _getAllData(type, filter) {
+    return apiConfig.get(`/${type}`, { params: filter })
+}
+
 function _getAll(type, filterData) {
     let filters = []
-    let filter=[]
+    let filter = []
     if (filterData) {
         if (filterData.filters) {
             filterData.filters.map(filter => {

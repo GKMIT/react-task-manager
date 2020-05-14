@@ -29,15 +29,15 @@ class Form extends React.Component {
 
     createForm = () => {
         const { form } = this.state
-        const { users } = this.props
         let formFields = []
         formFields.push({
             name: 'user_id',
             label: 'User',
-            type: 'select',
+            type: 'autocomplete',
             icon: '',
             value: form.user_id,
-            options: users,
+            url: 'users',
+            getOptionLabel: (option) => option.name,
             validation: 'required',
         })
 
@@ -115,7 +115,6 @@ class Form extends React.Component {
 
     componentDidMount() {
         const { id } = this.props.match.params
-        this.props.getAll('users', 'users')
         if (id && id !== 'new') {
             this.props.getData('form', 'tasks', id)
         }
@@ -183,11 +182,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { form, formSubmit, users } = state;
+    const { form, formSubmit } = state;
     return {
         form,
-        formSubmit,
-        users
+        formSubmit
     };
 }
 

@@ -27,7 +27,6 @@ class Form extends React.Component {
 
     createForm = () => {
         const { form } = this.state
-        const { roles } = this.props
         let formFields = []
 
         formFields.push({
@@ -36,7 +35,8 @@ class Form extends React.Component {
             type: 'autocomplete',
             icon: '',
             value: form.role_id,
-            options: roles,
+            url: 'roles',
+            getOptionLabel: (option) => option.name,
             validation: 'required',
         })
 
@@ -95,7 +95,6 @@ class Form extends React.Component {
         if (id && id !== 'new') {
             this.props.getData('form', 'users', id)
         }
-        this.props.getAll('roles', 'roles')
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -172,11 +171,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { form, formSubmit, roles, fileUpload } = state;
+    const { form, formSubmit, fileUpload } = state;
     return {
         form,
         formSubmit,
-        roles,
         fileUpload
     };
 }

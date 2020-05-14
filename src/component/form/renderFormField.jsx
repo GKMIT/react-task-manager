@@ -30,8 +30,9 @@ class RenderFormField extends React.PureComponent {
                         helperText={helperText}
                         index={index}
                         key={index}
-                        value={form.value}
-                        options={form.options}
+                        value={form.value}                        
+                        url={form.url}
+                        getOptionLabel={form.getOptionLabel}
                         handleChange={this.handleChange}
                     />
                 )
