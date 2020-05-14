@@ -56,8 +56,7 @@ class MuiForm extends React.Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(this.validator.allValid())
+        event.preventDefault();        
         if (this.validator.allValid()) {
             this.props.handleSubmit(event)
         } else {

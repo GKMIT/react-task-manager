@@ -33,7 +33,7 @@ class Form extends React.Component {
         formFields.push({
             name: 'role_id',
             label: 'Role',
-            type: 'select',
+            type: 'autocomplete',
             icon: '',
             value: form.role_id,
             options: roles,
