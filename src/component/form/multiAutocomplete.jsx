@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { crudService } from '../../_services';
-
+import { MultipleSelect } from "react-select-material-ui";
 
 class MuiAutocompleteBox extends React.Component {
 
@@ -40,32 +38,31 @@ class MuiAutocompleteBox extends React.Component {
             );
     }
 
-    handleChange = (e, value, name, index) => {
-        e.persist()
-        if (value) {
-            this.props.handleChange(value.id, name, index)
-        } else {
-            this.props.handleChange('', name, index)
-        }
-
-        this.setState({ search: false })
+    handleChange = (value, name, index) => {
+        this.props.handleChange(value, name, index)
     }
 
-    onInputChange = (event, value) => {
-        let { searchText } = this.state
-        searchText = value
-        this.setState({ searchText: searchText })
-        this.fetchData()
+    onInputChange = (event) => {
+        const newState = Object.assign({}, this.state);
+        newState.searchText = event.target.value;
+        this.setState(newState, () => {
+            this.fetchData()
+        });
     }
 
 
     render() {
-        const { name, value, label, required, fullWidth, helperText, index, getOptionLabel } = this.props
-        const { searchText, search, options } = this.state
+        const { name, value, label, fullWidth, helperText, index, getOptionLabel } = this.props
+        const { options } = this.state
 
-        let selected
+        let selectOptions = []
         if (options) {
-            selected = options.find(option => option.id === value)
+            options.forEach(element => {
+                selectOptions.push({
+                    label: element[getOptionLabel],
+                    value: element.id,
+                })
+            });
         }
 
         return (
@@ -75,21 +72,14 @@ class MuiAutocompleteBox extends React.Component {
                     fullWidth={fullWidth}
                 >
 
-                    <Autocomplete
-                        options={options}
-                        getOptionLabel={(option) => option[getOptionLabel]}
-                        onChange={(e, value) => this.handleChange(e, value, name, index)}
-                        onInputChange={(event, value) => this.onInputChange(event, value)}
-                        value={selected}
-                        inputValue={search ? searchText : (selected ? selected.name : '')}
-                        renderInput={(params) =>
-                            <TextField
-                                {...params}
-                                key={name}
-                                name={name}
-                                required={required}
-                                label={label}
-                            />}
+                    <MultipleSelect
+                        label={label}
+                        values={value}
+                        options={selectOptions}
+                        onChange={(e) => this.handleChange(e, name, index)}                        
+                        SelectProps={{
+                            isClearable: true,                            
+                        }}
                     />
 
                     {helperText && <FormHelperText>{helperText}</FormHelperText>}

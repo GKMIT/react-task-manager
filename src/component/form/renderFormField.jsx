@@ -10,6 +10,7 @@ import MuiTimePicker from './time'
 import MuiDateTimePicker from './datetime'
 import FileField from './file'
 import MuiAutocompleteBox from './autocomplete'
+import MuiMultiAutocompleteBox from './multiAutocomplete'
 
 class RenderFormField extends React.PureComponent {
 
@@ -23,6 +24,22 @@ class RenderFormField extends React.PureComponent {
             case 'autocomplete':
                 return (
                     <MuiAutocompleteBox
+                        label={form.label}
+                        name={form.name}
+                        required={form.required}
+                        fullWidth={fullWidth}
+                        helperText={helperText}
+                        index={index}
+                        key={index}
+                        value={form.value}                        
+                        url={form.url}
+                        getOptionLabel={form.getOptionLabel}
+                        handleChange={this.handleChange}
+                    />
+                )
+            case 'multi_autocomplete':
+                return (
+                    <MuiMultiAutocompleteBox
                         label={form.label}
                         name={form.name}
                         required={form.required}

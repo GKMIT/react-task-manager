@@ -37,7 +37,7 @@ class Form extends React.Component {
             icon: '',
             value: form.user_id,
             url: 'users',
-            getOptionLabel: (option) => option.name,
+            getOptionLabel: 'name',
             validation: 'required',
         })
 
