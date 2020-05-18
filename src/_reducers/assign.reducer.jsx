@@ -1,10 +1,9 @@
 export const reducerData = [
+    'form',
+    'formError',
+    'formSubmit',
     'users',
-    'user',
     'tasks',
-    'task',
     'roles',
-    'role',
-    'permissions',
-    'permission',
+    'permissions'
 ]

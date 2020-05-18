@@ -19,5 +19,6 @@ export const crudConstants = {
     DELETE_SUCCESS: 'CRUD_DELETE_SUCCESS',
     DELETE_FAILURE: 'CRUD_DELETE_FAILURE',
 
-    CLEAR: 'CRUD_CLEAR'
+    ADD: 'CRUD_ADD',
+    CLEAR: 'CRUD_CLEAR',    
 };

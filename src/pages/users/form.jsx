@@ -27,16 +27,16 @@ class Form extends React.Component {
 
     createForm = () => {
         const { form } = this.state
-        const { roles } = this.props
         let formFields = []
 
         formFields.push({
             name: 'role_id',
             label: 'Role',
-            type: 'select',
+            type: 'autocomplete',
             icon: '',
             value: form.role_id,
-            options: roles,
+            url: 'roles',
+            getOptionLabel: 'name',
             validation: 'required',
         })
 
@@ -64,7 +64,7 @@ class Form extends React.Component {
             type: 'file',
             icon: 'cloud_upload',
             value: form.image,
-            validation: 'required',
+            validation: null,
             editable: true,
             accept: 'image/*',
         })
@@ -93,9 +93,8 @@ class Form extends React.Component {
     componentDidMount() {
         const { id } = this.props.match.params
         if (id && id !== 'new') {
-            this.props.getData('user', 'users', id)
+            this.props.getData('form', 'users', id)
         }
-        this.props.getAll('roles', 'roles')
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -113,6 +112,10 @@ class Form extends React.Component {
         if (props.fileUpload !== null) {
             newState.form.image = props.fileUpload.result
             props.clearUpload();
+        }
+
+        if (props.formSubmit) {
+            props.history.push('/users')
         }
 
         return newState
@@ -141,13 +144,11 @@ class Form extends React.Component {
                 image: form.image,
             }
             if (action === 'update') {
-                this.props.updateData('user', 'users', id, formData)
+                this.props.updateData('form', 'users', id, formData)
             } else {
-                this.props.createData('user', 'users', formData)
+                this.props.createData('form', 'users', formData)
             }
-            this.props.history.push('/users')
         }
-
     }
 
     render() {
@@ -170,10 +171,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { user, roles, fileUpload } = state;
+    const { form, formSubmit, fileUpload } = state;
     return {
-        form: user,
-        roles,
+        form,
+        formSubmit,
         fileUpload
     };
 }

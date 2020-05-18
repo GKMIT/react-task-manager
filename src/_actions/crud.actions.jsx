@@ -9,11 +9,16 @@ export const crudActions = {
     _create,
     _update,
     _delete,
-    _clear
+    _clear,
+    _add
 };
 
 function _clear(kind) {
     return { type: `${kind}.${crudConstants.CLEAR}` };
+}
+
+function _add(kind, data) {
+    return { type: `${kind}.${crudConstants.ADD}`, data };
 }
 
 function _get(kind, url, id) {
@@ -23,13 +28,12 @@ function _get(kind, url, id) {
         crudService._get(url, id)
             .then(
                 result => {
-                    dispatch(success(result.data))
-                    dispatch(loaderActions.hide());
+                    if (result.status === 200) {
+                        dispatch(success(result.data))
+                    }
                 },
                 error => {
                     dispatch(failure(error.message));
-                    dispatch(alertActions.error(error.message));
-                    dispatch(loaderActions.hide());
                 }
             );
     };
@@ -46,13 +50,12 @@ function _getAll(kind, url, filterData) {
         crudService._getAll(url, filterData)
             .then(
                 result => {
-                    dispatch(success(result.data.data))
-                    dispatch(loaderActions.hide());
+                    if (result.status === 200) {
+                        dispatch(success(result.data.data))
+                    }
                 },
                 error => {
                     dispatch(failure(error.message));
-                    dispatch(alertActions.error(error.message));
-                    dispatch(loaderActions.hide());
                 }
             );
     };
@@ -69,15 +72,19 @@ function _create(kind, url, data) {
         crudService._create(url, data)
             .then(
                 result => {
-                    dispatch(alertActions.success(result.data.message));
-                    dispatch(success(null))
-                    dispatch(loaderActions.hide());
-                    _clear(kind)
+                    if (result.status === 200) {
+                        dispatch(alertActions.success(result.data.message));
+                        dispatch(success(null))
+                        dispatch(_clear('formError'))
+                        dispatch(_add('formSubmit', true))
+                    }
+                    if (result.status === 422) {
+                        dispatch(_add('formError', result.data))
+                        dispatch(_add('formSubmit', false))
+                    }
                 },
                 error => {
-                    dispatch(failure(error.message));
-                    dispatch(alertActions.error(error.message));
-                    dispatch(loaderActions.hide());
+                    dispatch(failure(error));
                 }
             );
     };
@@ -94,14 +101,18 @@ function _update(kind, url, id, data) {
         crudService._update(url, id, data)
             .then(
                 result => {
-                    dispatch(alertActions.success(result.data.message));
-                    dispatch(success(null))
-                    dispatch(loaderActions.hide());
-                },
-                error => {
-                    dispatch(failure(error.message));
-                    dispatch(alertActions.error(error.message));
-                    dispatch(loaderActions.hide());
+                    if (result.status === 200) {
+                        dispatch(alertActions.success(result.data.message));
+                        dispatch(success(null))
+                        dispatch(_clear('formError'))
+                        dispatch(_add('formSubmit', true))
+                    }
+                    if (result.status === 422) {
+                        dispatch(_add('formError', result.data))
+                        dispatch(_add('formSubmit', false))
+                    }
+                }, error => {
+                    dispatch(failure(error));
                 }
             );
     };
@@ -118,14 +129,13 @@ function _delete(kind, url, id) {
         crudService._delete(url, id)
             .then(
                 result => {
-                    dispatch(alertActions.success(result.data.message));
-                    dispatch(success(null))
-                    dispatch(loaderActions.hide());
+                    if (result.status === 200) {
+                        dispatch(alertActions.success(result.data.message));
+                        dispatch(success(null))
+                    }
                 },
                 error => {
                     dispatch(failure(error.message));
-                    dispatch(alertActions.error(error.message));
-                    dispatch(loaderActions.hide());
                 }
             );
     };

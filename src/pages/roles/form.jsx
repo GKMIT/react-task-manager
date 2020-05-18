@@ -22,7 +22,6 @@ class Form extends React.Component {
 
     createForm = () => {
         const { form } = this.state
-        const { permissions } = this.props
         let formFields = []
 
         formFields.push({
@@ -37,10 +36,11 @@ class Form extends React.Component {
         formFields.push({
             name: 'permissions',
             label: 'Permissions',
-            type: 'multiselect',
+            type: 'multi_autocomplete',
             icon: '',
             value: form.permissions,
-            options: permissions,
+            url: 'permissions',
+            getOptionLabel: 'code',
             validation: 'required',
         })
 
@@ -50,9 +50,8 @@ class Form extends React.Component {
     componentDidMount() {
         const { id } = this.props.match.params
         if (id && id !== 'new') {
-            this.props.getData('role', 'roles', id)
+            this.props.getData('form', 'roles', id)
         }
-        this.props.getAll('permissions', 'permissions')
     }
 
     static getDerivedStateFromProps(props) {
@@ -63,6 +62,10 @@ class Form extends React.Component {
             newState.submitText = 'Edit'
             newState.action = 'update'
             newState.form = props.form
+        }
+
+        if (props.formSubmit) {
+            props.history.push('/roles')
         }
         return newState
     }
@@ -82,11 +85,10 @@ class Form extends React.Component {
                 permissions: JSON.stringify(form.permissions),
             }
             if (action === 'update') {
-                this.props.updateData('role', 'roles', id, formData)
+                this.props.updateData('form', 'roles', id, formData)
             } else {
-                this.props.createData('role', 'roles', formData)
+                this.props.createData('form', 'roles', formData)
             }
-            this.props.history.push('/roles')
         }
 
     }
@@ -110,19 +112,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { role, permissions } = state;
-    let permissionData = []
-    if (permissions) {
-        permissions.forEach(element => {
-            permissionData.push({
-                id: element.id,
-                name: element.code
-            })
-        });
-    }
+    const { form, formSubmit } = state;
     return {
-        form: role,
-        permissions: permissionData
+        form,
+        formSubmit,
     };
 }
 
