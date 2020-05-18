@@ -28,7 +28,6 @@ class Form extends React.Component {
 
     createForm = () => {
         const { form } = this.state
-        const { users } = this.props
         let steps = []
 
         steps.push({
@@ -37,10 +36,11 @@ class Form extends React.Component {
                 {
                     name: 'user_id',
                     label: 'User',
-                    type: 'select',
+                    type: 'autocomplete',
                     icon: '',
                     value: form.user_id,
-                    options: users,
+                    url: 'users',
+                    getOptionLabel: 'name',
                     validation: 'required',
                 },
                 {
@@ -55,7 +55,6 @@ class Form extends React.Component {
                 }
             ]
         })
-
 
         steps.push({
             label: 'Task Details',
@@ -102,6 +101,7 @@ class Form extends React.Component {
                 }
             ]
         })
+
         steps.push({
             label: 'End Date & time',
             formFields: [
@@ -131,7 +131,6 @@ class Form extends React.Component {
 
     componentDidMount() {
         const { id } = this.props
-        this.props.getAll('users', 'users')
         if (id && id !== 'new') {
             this.props.getData('form', 'tasks', id)
         }
@@ -212,11 +211,10 @@ class Form extends React.Component {
 }
 
 function mapState(state) {
-    const { form, formSubmit, users, fileUpload } = state;
+    const { form, formSubmit, fileUpload } = state;
     return {
         form,
         formSubmit,
-        users,
         fileUpload
     };
 }
