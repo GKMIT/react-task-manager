@@ -15,6 +15,8 @@ import MuiForm from '../component/form'
 import { connect } from 'react-redux';
 import { userActions } from '../_actions';
 
+import FirebaseLogin from './firebaseLogin'
+
 const styles = (theme) => ({
     root: {
         height: '100vh',
@@ -115,6 +117,8 @@ class Login extends React.Component {
                             fullWidth={true}
                             noValidate={false}
                         />
+
+                        <FirebaseLogin />
 
                         <Grid container>
                             <Grid item xs>
