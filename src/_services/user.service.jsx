@@ -16,9 +16,12 @@ function login(email, password) {
     };
 
     return apiConfig.post(`/auth/login`, user)
-        .then(data => {
-            localStorage.setItem('user', JSON.stringify(data.data.data));
-            return data;
+        .then(result => {
+            if (result.status === 200) {
+                localStorage.setItem('user', JSON.stringify(result.data.data));
+                history.push('/dashboard');
+            }
+            return result
         });
 }
 
@@ -53,6 +56,5 @@ function firebaseCheckAuth() {
 
 function logout() {
     auth.signOut()
-    localStorage.removeItem('user');
-    history.push('/');
+    localStorage.removeItem('user');    
 }
