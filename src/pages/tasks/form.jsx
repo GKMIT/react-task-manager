@@ -28,92 +28,6 @@ class Form extends React.Component {
         }
     }
 
-    // createForm = () => {
-    //     const { form } = this.state
-    //     let formFields = []
-    //     formFields.push({
-    //         name: 'user_id',
-    //         label: 'User',
-    //         type: 'autocomplete',
-    //         icon: '',
-    //         value: form.user_id,
-    //         url: 'users',
-    //         getOptionLabel: 'name',
-    //         validation: 'required',
-    //     })
-
-    //     formFields.push({
-    //         name: 'name',
-    //         label: 'Name',
-    //         type: 'text',
-    //         icon: '',
-    //         value: form.name,
-    //         validation: 'required',
-    //     })
-
-    //     formFields.push({
-    //         name: 'datetime',
-    //         label: 'Date Time',
-    //         type: 'datetime',
-    //         variant: 'inline',
-    //         format: 'DD-MM-YYYY hh:mm A',
-    //         value: form.datetime,
-    //         validation: '',
-    //     })
-
-    //     formFields.push({
-    //         name: 'start_date',
-    //         label: 'Start Date',
-    //         type: 'date',
-    //         variant: 'inline',
-    //         format: 'DD-MM-YYYY',
-    //         value: form.start_date,
-    //         validation: 'required',
-    //     })
-
-    //     formFields.push({
-    //         name: 'start_time',
-    //         label: 'Start Time',
-    //         type: 'time',
-    //         variant: 'inline',
-    //         format: 'hh:mm A',
-    //         value: form.start_time,
-    //         validation: 'required',
-    //     })
-
-    //     formFields.push({
-    //         name: 'end_date',
-    //         label: 'End Date',
-    //         type: 'date',
-    //         variant: 'inline',
-    //         format: 'DD-MM-YYYY',
-    //         value: form.end_date,
-    //         validation: 'required',
-    //     })
-
-    //     formFields.push({
-    //         name: 'end_time',
-    //         label: 'End Time',
-    //         type: 'time',
-    //         variant: 'inline',
-    //         format: 'hh:mm A',
-    //         value: form.end_time,
-    //         validation: 'required',
-    //     })
-
-
-    //     formFields.push({
-    //         name: 'details',
-    //         label: 'Details',
-    //         type: 'text',
-    //         icon: '',
-    //         value: form.details,
-    //         validation: 'required',
-    //     })
-
-    //     return formFields
-    // }
-
     createForm = () => {
         const { form } = this.state
         let steps = []
@@ -225,7 +139,7 @@ class Form extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps(props) {
+    static getDerivedStateFromProps(props, state) {
         let newState = {};
         if (props.match.params.id !== 'new' && props.form !== null) {
             newState.id = props.match.params.id
@@ -233,6 +147,8 @@ class Form extends React.Component {
             newState.submitText = 'Edit'
             newState.action = 'update'
             newState.form = props.form
+        } else {
+            newState.form = state.form
         }
 
         if (props.fileUpload !== null) {

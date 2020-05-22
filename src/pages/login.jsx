@@ -56,6 +56,12 @@ class Login extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (this.props.loggedIn) {
+            this.props.history.push('/dashboard')
+        }
+    }
+
     createForm = () => {
         const { form } = this.state
         let formFields = []
