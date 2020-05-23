@@ -6,6 +6,7 @@ import MuiPassTextBox from './password'
 import MuiSelectBox from './selectbox'
 import MuiMultiSelectBox from './multiselectbox'
 import MuiDatePicker from './date'
+import MuiDateRangePicker from './daterange'
 import MuiTimePicker from './time'
 import MuiDateTimePicker from './datetime'
 import FileField from './file'
@@ -35,7 +36,7 @@ class RenderFormField extends React.PureComponent {
                         helperText={helperText}
                         index={index}
                         key={index}
-                        value={form.value}                        
+                        value={form.value}
                         url={form.url}
                         getOptionLabel={form.getOptionLabel}
                         handleChange={this.handleChange}
@@ -51,7 +52,7 @@ class RenderFormField extends React.PureComponent {
                         helperText={helperText}
                         index={index}
                         key={index}
-                        value={form.value}                        
+                        value={form.value}
                         url={form.url}
                         getOptionLabel={form.getOptionLabel}
                         handleChange={this.handleChange}
@@ -135,6 +136,22 @@ class RenderFormField extends React.PureComponent {
                     />
                 )
 
+            case 'daterange':
+                return (
+                    <MuiDateRangePicker
+                        label={form.label}
+                        name={form.name}
+                        required={form.required}
+                        fullWidth={fullWidth}
+                        helperText={helperText}
+                        index={index}
+                        key={index}
+                        value={form.value}
+                        variant={form.variant}
+                        format={form.format} 
+                        handleChange={this.handleChange}
+                    />
+                )
             case 'date':
                 return (
                     <MuiDatePicker

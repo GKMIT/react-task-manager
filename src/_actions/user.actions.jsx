@@ -14,8 +14,7 @@ function login(username, password) {
 
         userService.login(username, password)
             .then(
-                result => {
-                    console.log(result)
+                result => {                    
                     if (result.status === 200) {
                         dispatch(success(result.message));
                     }
