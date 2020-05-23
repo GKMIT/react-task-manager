@@ -39,6 +39,7 @@ npm start
 
 [material-ui] (https://www.npmjs.com/package/@material-ui/core)
 [material-table] (https://www.npmjs.com/package/material-table)
+[react-daterange-picker] (https://www.npmjs.com/package/@matharumanpreet00/react-daterange-picker)
 
 
 ### React website
