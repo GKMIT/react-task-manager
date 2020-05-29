@@ -117,6 +117,10 @@ class Form extends React.Component {
             newState.submitText = 'Edit'
             newState.action = 'update'
             newState.form = props.form
+            newState.form.workingDay = {
+                startDate: new Date(),
+                endDate: new Date(),
+            }
         } else {
             newState.form = state.form
         }
